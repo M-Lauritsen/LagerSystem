@@ -1,5 +1,3 @@
-using System;
-
 namespace LagerSystem.Models
 {
     public class ErrorViewModel
