@@ -19,7 +19,9 @@ namespace LagerSystem
                 try
                 {
                     var context = services.GetRequiredService<StorageContext>();
-                    SeedData.InitData(context);
+                    SeedData ss = new SeedData();
+                    ss.InitData(context);
+                    //SeedData.InitData(context);
                 }
                 catch (Exception e)
                 {
