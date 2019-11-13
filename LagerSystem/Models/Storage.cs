@@ -10,8 +10,9 @@ namespace LagerSystem.Models
         public int Total { get; set; }
 
         public int NumberOfRacks { get; set; }
-        public IEnumerable<Rack> Racks { get; set; }
+        public List<Rack> Racks { get; set; }
 
-        public IEnumerable<Pallet> Pallets { get; set; }
+        public List<Pallet> Pallets { get; set; }
+
     }
 }

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LagerSystem.Migrations
 {
     [DbContext(typeof(StorageContext))]
-    [Migration("20191113072003_palletsList")]
-    partial class palletsList
+    [Migration("20191113105838_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -7,25 +7,13 @@ namespace LagerSystem.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Pallets",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Pallets", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Storages",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Height = table.Column<int>(nullable: false),
-                    Width = table.Column<int>(nullable: false),
+                    StorageName = table.Column<string>(nullable: true),
+                    Total = table.Column<int>(nullable: false),
                     NumberOfRacks = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -34,22 +22,20 @@ namespace LagerSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Items",
+                name: "Pallets",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Amount = table.Column<int>(nullable: false),
-                    PalletId = table.Column<int>(nullable: true)
+                    StorageId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Items", x => x.Id);
+                    table.PrimaryKey("PK_Pallets", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Items_Pallets_PalletId",
-                        column: x => x.PalletId,
-                        principalTable: "Pallets",
+                        name: "FK_Pallets_Storages_StorageId",
+                        column: x => x.StorageId,
+                        principalTable: "Storages",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -71,6 +57,27 @@ namespace LagerSystem.Migrations
                         name: "FK_Racks_Storages_StorageId",
                         column: x => x.StorageId,
                         principalTable: "Storages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Items",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    Amount = table.Column<int>(nullable: false),
+                    PalletId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Items", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Items_Pallets_PalletId",
+                        column: x => x.PalletId,
+                        principalTable: "Pallets",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -108,6 +115,11 @@ namespace LagerSystem.Migrations
                 name: "IX_Items_PalletId",
                 table: "Items",
                 column: "PalletId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Pallets_StorageId",
+                table: "Pallets",
+                column: "StorageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Positions_PalletId",

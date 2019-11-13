@@ -1,8 +1,6 @@
 ﻿using LagerSystem.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace LagerSystem.Data
 {
@@ -18,22 +16,18 @@ namespace LagerSystem.Data
             var storage = new Storage()
             {
                 StorageName = "Lager 1",
-                NumberOfRacks = 2
+                NumberOfRacks = 2,
+                Racks = new List<Rack>()
+                {
+                    new Rack {Height = 2, Width = 2,},
+                    new Rack {Height = 3, Width = 3,},
+                }
+
             };
+            
 
             context.Storages.Add(storage);
             context.SaveChanges();
-
-            var racks = new Rack[]
-            {
-                new Rack { Id = 1, Height = 8, Width = 8},
-                new Rack { Id = 2, Height = 4, Width = 4},
-                new Rack { Id = 3, Height = 4, Width = 4},
-                new Rack { Id = 4, Height = 8, Width = 8},
-            };
-
-
-
 
         }
     }
