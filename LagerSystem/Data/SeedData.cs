@@ -24,11 +24,11 @@ namespace LagerSystem.Data
                 }
 
             };
-
-
             storage.Generate();
             context.Storages.Add(storage);
             context.SaveChanges();
+
+            
         }
     }
 }
