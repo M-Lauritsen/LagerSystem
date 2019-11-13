@@ -7,7 +7,5 @@
         public Pallet Pallet { get; set; }
         public int Height { get; set; }
         public int Width { get; set; }
-
-        public int RackId { get; set; }
     }
 }

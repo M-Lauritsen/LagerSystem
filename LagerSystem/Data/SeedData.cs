@@ -6,12 +6,12 @@ namespace LagerSystem.Data
 {
     public class SeedData
     {
-        public  void InitData(StorageContext context)
+        public void InitData(StorageContext context)
         {
-            //if (context.Storages.Any())
-            //{
-            //    return;
-            //}
+            if (context.Storages.Any())
+            {
+                return;
+            }
 
             var storage = new Storage()
             {
@@ -24,16 +24,10 @@ namespace LagerSystem.Data
                 }
 
             };
+
+
+            storage.Generate();
             context.Storages.Add(storage);
-          //  context.SaveChanges();
-
-
-            //Rack test = new Rack();
-            //test.generate(storage.Racks);
-            //Rack test1 = new Rack();
-            //Rack test2 = new Rack();
-
-            //context.Racks.Add(test);
             context.SaveChanges();
         }
     }
