@@ -4,14 +4,16 @@ using LagerSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LagerSystem.Migrations
 {
     [DbContext(typeof(StorageContext))]
-    partial class StorageContextModelSnapshot : ModelSnapshot
+    [Migration("20191113065032_storagenameadded")]
+    partial class storagenameadded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,12 +51,7 @@ namespace LagerSystem.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("StorageId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("StorageId");
 
                     b.ToTable("Pallets");
                 });
@@ -120,13 +117,16 @@ namespace LagerSystem.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("Height")
+                        .HasColumnType("int");
+
                     b.Property<int>("NumberOfRacks")
                         .HasColumnType("int");
 
                     b.Property<string>("StorageName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Total")
+                    b.Property<int>("Width")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -139,13 +139,6 @@ namespace LagerSystem.Migrations
                     b.HasOne("LagerSystem.Models.Pallet", null)
                         .WithMany("Items")
                         .HasForeignKey("PalletId");
-                });
-
-            modelBuilder.Entity("LagerSystem.Models.Pallet", b =>
-                {
-                    b.HasOne("LagerSystem.Models.Storage", null)
-                        .WithMany("Pallets")
-                        .HasForeignKey("StorageId");
                 });
 
             modelBuilder.Entity("LagerSystem.Models.Position", b =>
