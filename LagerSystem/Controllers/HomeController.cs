@@ -26,8 +26,38 @@ namespace LagerSystem.Controllers
             var test = from a in _context.Storages
                        .Include(r => r.Racks)
                        .ThenInclude(p => p.Positions)
+                       .ThenInclude(p => p.Pallet)
                        select a;
 
+
+            return Json(test);
+        }
+
+        [HttpGet]
+        [Route("api/item/{name}")]
+        public IActionResult Index(string name)
+        {
+            var test = _context.Items
+                .Where(p => p.Name == name);
+
+            return Json(test);
+        }
+        [HttpGet]
+        [Route("api/pallet/{pal}")]
+        public IActionResult Index(int pal)
+        {
+            var test = _context.Positions
+                .Where(p => p.PalletId == pal);
+
+            return Json(test);
+        }
+
+        [HttpGet]
+        [Route("api/pos/{pos}")]
+        public IActionResult Position(string pos)
+        {
+            var test = _context.Positions
+                .Where(p => p.RackPosition == pos);
 
             return Json(test);
         }

@@ -85,7 +85,8 @@ namespace LagerSystem.Migrations
                     PalletId = table.Column<int>(nullable: true),
                     RackId = table.Column<int>(nullable: false),
                     Height = table.Column<int>(nullable: false),
-                    Width = table.Column<int>(nullable: false)
+                    Width = table.Column<int>(nullable: false),
+                    RackPosition = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

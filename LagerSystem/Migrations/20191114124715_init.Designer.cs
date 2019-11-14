@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LagerSystem.Migrations
 {
     [DbContext(typeof(StorageContext))]
-    [Migration("20191114102609_init")]
+    [Migration("20191114124715_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -74,6 +74,9 @@ namespace LagerSystem.Migrations
 
                     b.Property<int>("RackId")
                         .HasColumnType("int");
+
+                    b.Property<string>("RackPosition")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Width")
                         .HasColumnType("int");

@@ -54,6 +54,8 @@ namespace LagerSystem.Data
                 context.Items.Add(item);
             }
             context.SaveChanges();
+
+           
         }
     }
 }

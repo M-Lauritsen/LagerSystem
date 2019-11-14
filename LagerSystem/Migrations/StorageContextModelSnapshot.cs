@@ -73,6 +73,9 @@ namespace LagerSystem.Migrations
                     b.Property<int>("RackId")
                         .HasColumnType("int");
 
+                    b.Property<string>("RackPosition")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Width")
                         .HasColumnType("int");
 

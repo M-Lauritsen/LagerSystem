@@ -15,6 +15,11 @@ namespace LagerSystem.Data
         public DbSet<Pallet> Pallets { get; set; }
         public DbSet<Item> Items { get; set; }
 
-        
+        protected override void OnModelCreating(ModelBuilder model)
+        {
+            model.Entity<Position>()
+                .HasOne(p => p.Pallet)
+                .WithOne(p => p.Position);
+        }
     }
 }
