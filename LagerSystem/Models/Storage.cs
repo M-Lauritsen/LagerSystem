@@ -12,7 +12,6 @@ namespace LagerSystem.Models
         public int NumberOfRacks { get; set; }
         public List<Rack> Racks { get; set; }
 
-        public List<Pallet> Pallets { get; set; }
 
         public void Generate()
         {

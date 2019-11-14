@@ -5,6 +5,7 @@ namespace LagerSystem.Models
     public class Pallet
     {
         public int Id { get; set; }
-        public IEnumerable<Item> Items { get; set; }
+        public Position Position { get; set; }
+        public List<Item> Items { get; set; }
     }
 }

@@ -14,5 +14,7 @@ namespace LagerSystem.Data
         public DbSet<Position> Positions { get; set; }
         public DbSet<Pallet> Pallets { get; set; }
         public DbSet<Item> Items { get; set; }
+
+        
     }
 }

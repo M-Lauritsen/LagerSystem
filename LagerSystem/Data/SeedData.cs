@@ -28,7 +28,32 @@ namespace LagerSystem.Data
             context.Storages.Add(storage);
             context.SaveChanges();
 
-            
+            var pallet = new Pallet[]
+            {
+                new Pallet{},
+                new Pallet{},
+                new Pallet{},
+            };
+
+
+            foreach (var item in pallet)
+            {
+                context.Pallets.Add(item);
+            }
+            context.SaveChanges();
+
+            var items = new Item[]
+            {
+                new Item {Amount = 11, Name = "Cola", PalletId = pallet.Single(i => i.Id == 1).Id},
+                new Item {Amount = 1, Name = "Toilet", PalletId = pallet.Single(i => i.Id == 2).Id},
+                new Item {Amount = 100, Name = "Playstation", PalletId = pallet.Single(i => i.Id == 3).Id},
+            };
+
+            foreach (var item in items)
+            {
+                context.Items.Add(item);
+            }
+            context.SaveChanges();
         }
     }
 }

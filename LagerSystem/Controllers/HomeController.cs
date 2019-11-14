@@ -1,22 +1,35 @@
-﻿using LagerSystem.Models;
+﻿using LagerSystem.Data;
+using LagerSystem.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace LagerSystem.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly StorageContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, StorageContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
-        public IActionResult Index()
+        public ActionResult Index()
         {
-            return View();
+
+            var test = from a in _context.Storages
+                       .Include(r => r.Racks)
+                       .ThenInclude(p => p.Positions)
+                       select a;
+
+
+            return Json(test);
         }
 
         public IActionResult Privacy()

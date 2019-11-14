@@ -32,7 +32,7 @@ namespace LagerSystem.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PalletId")
+                    b.Property<int>("PalletId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -49,12 +49,7 @@ namespace LagerSystem.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("StorageId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("StorageId");
 
                     b.ToTable("Pallets");
                 });
@@ -83,7 +78,9 @@ namespace LagerSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PalletId");
+                    b.HasIndex("PalletId")
+                        .IsUnique()
+                        .HasFilter("[PalletId] IS NOT NULL");
 
                     b.HasIndex("RackId");
 
@@ -138,21 +135,16 @@ namespace LagerSystem.Migrations
                 {
                     b.HasOne("LagerSystem.Models.Pallet", null)
                         .WithMany("Items")
-                        .HasForeignKey("PalletId");
-                });
-
-            modelBuilder.Entity("LagerSystem.Models.Pallet", b =>
-                {
-                    b.HasOne("LagerSystem.Models.Storage", null)
-                        .WithMany("Pallets")
-                        .HasForeignKey("StorageId");
+                        .HasForeignKey("PalletId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("LagerSystem.Models.Position", b =>
                 {
                     b.HasOne("LagerSystem.Models.Pallet", "Pallet")
-                        .WithMany()
-                        .HasForeignKey("PalletId");
+                        .WithOne("Position")
+                        .HasForeignKey("LagerSystem.Models.Position", "PalletId");
 
                     b.HasOne("LagerSystem.Models.Rack", null)
                         .WithMany("Positions")
