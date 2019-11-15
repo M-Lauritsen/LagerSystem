@@ -30,24 +30,26 @@ namespace LagerSystem.Controllers
                        select a;
 
 
-            return Json(test);
+            return View();
         }
 
         [HttpGet]
         [Route("api/item/{name}")]
         public IActionResult Index(string name)
         {
-            var test = _context.Items
-                .Where(p => p.Name == name);
+            var test = _context.Pallets
+                .Include(i => i.Items)
+                .Where(n => n.Items.Any(i => i.Name == name));
 
             return Json(test);
         }
         [HttpGet]
         [Route("api/pallet/{pal}")]
-        public IActionResult Index(int pal)
+        public IActionResult Pal(string pal)
         {
-            var test = _context.Positions
-                .Where(p => p.PalletId == pal);
+            var test = _context.Pallets
+                .Include(i => i.Items)
+                .Where(p => p.RackPosition == pal);
 
             return Json(test);
         }

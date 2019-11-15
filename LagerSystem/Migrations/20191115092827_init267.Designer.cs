@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LagerSystem.Migrations
 {
     [DbContext(typeof(StorageContext))]
-    [Migration("20191114124715_init")]
-    partial class init
+    [Migration("20191115092827_init267")]
+    partial class init267
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -51,6 +51,9 @@ namespace LagerSystem.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("RackPosition")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Pallets");
@@ -72,7 +75,7 @@ namespace LagerSystem.Migrations
                     b.Property<int?>("PalletId")
                         .HasColumnType("int");
 
-                    b.Property<int>("RackId")
+                    b.Property<int?>("RackId")
                         .HasColumnType("int");
 
                     b.Property<string>("RackPosition")
@@ -151,11 +154,9 @@ namespace LagerSystem.Migrations
                         .WithOne("Position")
                         .HasForeignKey("LagerSystem.Models.Position", "PalletId");
 
-                    b.HasOne("LagerSystem.Models.Rack", null)
+                    b.HasOne("LagerSystem.Models.Rack", "Rack")
                         .WithMany("Positions")
-                        .HasForeignKey("RackId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RackId");
                 });
 
             modelBuilder.Entity("LagerSystem.Models.Rack", b =>

@@ -17,9 +17,9 @@ namespace LagerSystem.Data
 
         protected override void OnModelCreating(ModelBuilder model)
         {
-            model.Entity<Position>()
-                .HasOne(p => p.Pallet)
-                .WithOne(p => p.Position);
+            model.Entity<Rack>()
+                 .HasMany(p => p.Positions)
+                 .WithOne(r => r.Rack);
         }
     }
 }
