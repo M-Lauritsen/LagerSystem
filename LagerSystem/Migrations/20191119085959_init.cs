@@ -2,7 +2,7 @@
 
 namespace LagerSystem.Migrations
 {
-    public partial class init2 : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,6 +17,20 @@ namespace LagerSystem.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Pallets", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StockItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    Amount = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StockItems", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -35,23 +49,25 @@ namespace LagerSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Items",
+                name: "PalletItems",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Amount = table.Column<int>(nullable: false),
                     PalletId = table.Column<int>(nullable: false),
-                    RackPosition = table.Column<string>(nullable: true)
+                    StockItemId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Items", x => x.Id);
+                    table.PrimaryKey("PK_PalletItems", x => new { x.StockItemId, x.PalletId });
                     table.ForeignKey(
-                        name: "FK_Items_Pallets_PalletId",
+                        name: "FK_PalletItems_Pallets_PalletId",
                         column: x => x.PalletId,
                         principalTable: "Pallets",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PalletItems_StockItems_StockItemId",
+                        column: x => x.StockItemId,
+                        principalTable: "StockItems",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -108,8 +124,8 @@ namespace LagerSystem.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Items_PalletId",
-                table: "Items",
+                name: "IX_PalletItems_PalletId",
+                table: "PalletItems",
                 column: "PalletId");
 
             migrationBuilder.CreateIndex(
@@ -133,10 +149,13 @@ namespace LagerSystem.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Items");
+                name: "PalletItems");
 
             migrationBuilder.DropTable(
                 name: "Positions");
+
+            migrationBuilder.DropTable(
+                name: "StockItems");
 
             migrationBuilder.DropTable(
                 name: "Pallets");

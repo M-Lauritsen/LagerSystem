@@ -8,8 +8,8 @@ namespace LagerSystem.Models
         public int Id { get; set; }
         public string RackPosition { get; set; }
         public Position Position { get; set; }
-        public List<Item> Items { get; set; }
 
+        public ICollection<PalletItems> PalletItems { get; set; }
 
     }
 }

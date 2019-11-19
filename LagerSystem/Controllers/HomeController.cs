@@ -1,5 +1,6 @@
 ﻿using LagerSystem.Data;
 using LagerSystem.Models;
+using LagerSystem.Models.StorageViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -34,25 +35,35 @@ namespace LagerSystem.Controllers
         }
 
         [HttpGet]
-        [Route("api/item/{name}")]
-        public IActionResult Index(string name)
+        [Route("api/item/{id}")]
+        public async Task<IActionResult> Index(int? id)
         {
-            var test = _context.Pallets
-                .Include(i => i.Items)
-                .Where(n => n.Items.Any(i => i.Name == name));
+            var viewModel = new PalletIndexData();
+            viewModel.Pallets = await _context.Pallets
+                    .Include(i => i.PalletItems)
+                    .ThenInclude(i => i.StockItem)
+                    .OrderBy(i => i.RackPosition)
+                .ToListAsync();
 
-            return Json(test);
-        }
-        [HttpGet]
-        [Route("api/pallet/{pal}")]
-        public IActionResult Pal(string pal)
-        {
-            var test = _context.Pallets
-                .Include(i => i.Items)
-                .Where(p => p.RackPosition == pal);
+            if (id != null)
+            {
 
-            return Json(test);
+                Pallet pallet = viewModel.Pallets
+                    .Where(i => i.Id == id.Value).Single();
+                viewModel.StockItems = pallet.PalletItems.Select(i => i.StockItem);
+            }
+            return View(viewModel);
         }
+        //[HttpGet]
+        //[Route("api/pallet/{pal}")]
+        //public IActionResult Pal(string pal)
+        //{
+        //    var test = _context.Pallets
+        //        .Include(i => i.Items)
+        //        .Where(p => p.RackPosition == pal);
+
+        //    return Json(test);
+        //}
 
         [HttpGet]
         [Route("api/pos/{pos}")]

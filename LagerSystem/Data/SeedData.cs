@@ -42,18 +42,19 @@ namespace LagerSystem.Data
             }
             context.SaveChanges();
 
-            var items = new Item[]
+            var stock = new StockItem[]
             {
-                new Item {Amount = 11, Name = "Cola", PalletId = pallet.Single(i => i.Id == 1).Id},
-                new Item {Amount = 1, Name = "Toilet", PalletId = pallet.Single(i => i.Id == 2).Id},
-                new Item {Amount = 100, Name = "Playstation", PalletId = pallet.Single(i => i.Id == 3).Id},
+                new StockItem { Name = "Cola", Amount = 1000},
+                new StockItem { Name = "Cola Light", Amount = 1000},
+                new StockItem { Name = "Cola Zero", Amount = 1000},
+                new StockItem { Name = "Cola Cherry", Amount = 1000},
             };
-
-            foreach (var item in items)
+            foreach (var item in stock)
             {
-                context.Items.Add(item);
+                context.StockItems.Add(item);
             }
             context.SaveChanges();
+
 
            
         }

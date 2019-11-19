@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LagerSystem.Migrations
 {
     [DbContext(typeof(StorageContext))]
-    [Migration("20191115092827_init267")]
-    partial class init267
+    [Migration("20191119085959_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,29 +20,6 @@ namespace LagerSystem.Migrations
                 .HasAnnotation("ProductVersion", "3.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("LagerSystem.Models.Item", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Amount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PalletId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PalletId");
-
-                    b.ToTable("Items");
-                });
 
             modelBuilder.Entity("LagerSystem.Models.Pallet", b =>
                 {
@@ -57,6 +34,21 @@ namespace LagerSystem.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Pallets");
+                });
+
+            modelBuilder.Entity("LagerSystem.Models.PalletItems", b =>
+                {
+                    b.Property<int>("StockItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PalletId")
+                        .HasColumnType("int");
+
+                    b.HasKey("StockItemId", "PalletId");
+
+                    b.HasIndex("PalletId");
+
+                    b.ToTable("PalletItems");
                 });
 
             modelBuilder.Entity("LagerSystem.Models.Position", b =>
@@ -118,6 +110,24 @@ namespace LagerSystem.Migrations
                     b.ToTable("Racks");
                 });
 
+            modelBuilder.Entity("LagerSystem.Models.StockItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StockItems");
+                });
+
             modelBuilder.Entity("LagerSystem.Models.Storage", b =>
                 {
                     b.Property<int>("Id")
@@ -139,11 +149,17 @@ namespace LagerSystem.Migrations
                     b.ToTable("Storages");
                 });
 
-            modelBuilder.Entity("LagerSystem.Models.Item", b =>
+            modelBuilder.Entity("LagerSystem.Models.PalletItems", b =>
                 {
-                    b.HasOne("LagerSystem.Models.Pallet", null)
-                        .WithMany("Items")
+                    b.HasOne("LagerSystem.Models.Pallet", "Pallet")
+                        .WithMany("PalletItems")
                         .HasForeignKey("PalletId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LagerSystem.Models.StockItem", "StockItem")
+                        .WithMany("PalletItems")
+                        .HasForeignKey("StockItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
