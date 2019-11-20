@@ -25,7 +25,7 @@ namespace LagerSystem.Models
                 {
                     for (int j = 1; j <= item.Height; j++)
                     {
-                        item.Positions.Add(new Position { Height = j, Width = i , RackPosition = test.ToString() + i.ToString() + j.ToString()});
+                        item.Positions.Add(new Position { Height = j, Width = i, RackPosition = test.ToString() + i.ToString() + j.ToString() });
                     }
 
                 }

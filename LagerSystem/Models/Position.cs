@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace LagerSystem.Models
+﻿namespace LagerSystem.Models
 {
     public class Position
     {

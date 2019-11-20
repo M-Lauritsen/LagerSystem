@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using LagerSystem.Data;
+using LagerSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using LagerSystem.Data;
-using LagerSystem.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace LagerSystem.Views
 {
@@ -107,7 +105,7 @@ namespace LagerSystem.Views
 
                     _context.Update(position);
                     _context.Update(pallet);
-                    
+
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
