@@ -10,25 +10,22 @@ using LagerSystem.Models;
 
 namespace LagerSystem.Views
 {
-    public class PalletsController : Controller
+    public class StockItemsController : Controller
     {
         private readonly StorageContext _context;
 
-        public PalletsController(StorageContext context)
+        public StockItemsController(StorageContext context)
         {
             _context = context;
         }
 
-        // GET: Pallets
+        // GET: StockItems
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Pallets
-                .Include(i => i.PalletItems)
-                .ThenInclude(i => i.StockItem)
-                .OrderBy(i => i.RackPosition).ToListAsync());
+            return View(await _context.StockItems.ToListAsync());
         }
 
-        // GET: Pallets/Details/5
+        // GET: StockItems/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -36,41 +33,41 @@ namespace LagerSystem.Views
                 return NotFound();
             }
 
-            var pallet = await _context.Pallets
-                .Include(i => i.PalletItems)
-                .ThenInclude(i => i.StockItem)
+            var stockItem = await _context.StockItems
+                .Include(p => p.PalletItems)
+                .ThenInclude(p => p.Pallet)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (pallet == null)
+            if (stockItem == null)
             {
                 return NotFound();
             }
 
-            return View(pallet);
+            return View(stockItem);
         }
 
-        // GET: Pallets/Create
+        // GET: StockItems/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Pallets/Create
+        // POST: StockItems/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,RackPosition")] Pallet pallet)
+        public async Task<IActionResult> Create([Bind("Id,Name,Amount")] StockItem stockItem)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(pallet);
+                _context.Add(stockItem);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(pallet);
+            return View(stockItem);
         }
 
-        // GET: Pallets/Edit/5
+        // GET: StockItems/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -78,22 +75,22 @@ namespace LagerSystem.Views
                 return NotFound();
             }
 
-            var pallet = await _context.Pallets.FindAsync(id);
-            if (pallet == null)
+            var stockItem = await _context.StockItems.FindAsync(id);
+            if (stockItem == null)
             {
                 return NotFound();
             }
-            return View(pallet);
+            return View(stockItem);
         }
 
-        // POST: Pallets/Edit/5
+        // POST: StockItems/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,RackPosition")] Pallet pallet)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Amount")] StockItem stockItem)
         {
-            if (id != pallet.Id)
+            if (id != stockItem.Id)
             {
                 return NotFound();
             }
@@ -102,12 +99,12 @@ namespace LagerSystem.Views
             {
                 try
                 {
-                    _context.Update(pallet);
+                    _context.Update(stockItem);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PalletExists(pallet.Id))
+                    if (!StockItemExists(stockItem.Id))
                     {
                         return NotFound();
                     }
@@ -118,10 +115,10 @@ namespace LagerSystem.Views
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(pallet);
+            return View(stockItem);
         }
 
-        // GET: Pallets/Delete/5
+        // GET: StockItems/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -129,30 +126,30 @@ namespace LagerSystem.Views
                 return NotFound();
             }
 
-            var pallet = await _context.Pallets
+            var stockItem = await _context.StockItems
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (pallet == null)
+            if (stockItem == null)
             {
                 return NotFound();
             }
 
-            return View(pallet);
+            return View(stockItem);
         }
 
-        // POST: Pallets/Delete/5
+        // POST: StockItems/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var pallet = await _context.Pallets.FindAsync(id);
-            _context.Pallets.Remove(pallet);
+            var stockItem = await _context.StockItems.FindAsync(id);
+            _context.StockItems.Remove(stockItem);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PalletExists(int id)
+        private bool StockItemExists(int id)
         {
-            return _context.Pallets.Any(e => e.Id == id);
+            return _context.StockItems.Any(e => e.Id == id);
         }
     }
 }
