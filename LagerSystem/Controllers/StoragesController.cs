@@ -1,30 +1,28 @@
 ﻿using LagerSystem.Data;
 using LagerSystem.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace LagerSystem.Views
 {
-    public class PositionsController : Controller
+    public class StoragesController : Controller
     {
         private readonly StorageContext _context;
 
-        public PositionsController(StorageContext context)
+        public StoragesController(StorageContext context)
         {
             _context = context;
         }
 
-        // GET: Positions
+        // GET: Storages
         public async Task<IActionResult> Index()
         {
-            var storageContext = _context.Positions.Include(p => p.Pallet).OrderBy(r => r.RackPosition);
-            return View(await storageContext.ToListAsync());
+            return View(await _context.Storages.ToListAsync());
         }
 
-        // GET: Positions/Details/5
+        // GET: Storages/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,42 +30,39 @@ namespace LagerSystem.Views
                 return NotFound();
             }
 
-            var position = await _context.Positions
-                .Include(p => p.Pallet)
+            var storage = await _context.Storages
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (position == null)
+            if (storage == null)
             {
                 return NotFound();
             }
 
-            return View(position);
+            return View(storage);
         }
 
-        // GET: Positions/Create
+        // GET: Storages/Create
         public IActionResult Create()
         {
-            ViewData["PalletId"] = new SelectList(_context.Pallets, "Id", "Id");
             return View();
         }
 
-        // POST: Positions/Create
+        // POST: Storages/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Available,PalletId,Height,Width,RackPosition")] Position position)
+        public async Task<IActionResult> Create([Bind("Id,StorageName,StreetName,City,Postal,Telephone")] Storage storage)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(position);
+                _context.Add(storage);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PalletId"] = new SelectList(_context.Pallets, "Id", "Id", position.PalletId);
-            return View(position);
+            return View(storage);
         }
 
-        // GET: Positions/Edit/5
+        // GET: Storages/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -75,23 +70,22 @@ namespace LagerSystem.Views
                 return NotFound();
             }
 
-            var position = await _context.Positions.FindAsync(id);
-            if (position == null)
+            var storage = await _context.Storages.FindAsync(id);
+            if (storage == null)
             {
                 return NotFound();
             }
-            ViewData["PalletId"] = new SelectList(_context.Pallets, "Id", "Id", position.PalletId);
-            return View(position);
+            return View(storage);
         }
 
-        // POST: Positions/Edit/5
+        // POST: Storages/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Available,PalletId,Height,Width,RackPosition")] Position position, Pallet pallet)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,StorageName,StreetName,City,Postal,Telephone")] Storage storage)
         {
-            if (id != position.Id)
+            if (id != storage.Id)
             {
                 return NotFound();
             }
@@ -100,16 +94,12 @@ namespace LagerSystem.Views
             {
                 try
                 {
-                    position.Available = false;
-                    pallet.RackPosition = position.RackPosition;
-
-                    _context.Update(position);
-                    _context.Update(position);
+                    _context.Update(storage);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PositionExists(position.Id))
+                    if (!StorageExists(storage.Id))
                     {
                         return NotFound();
                     }
@@ -120,11 +110,10 @@ namespace LagerSystem.Views
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PalletId"] = new SelectList(_context.Pallets, "Id", "Id", position.PalletId);
-            return View(position);
+            return View(storage);
         }
 
-        // GET: Positions/Delete/5
+        // GET: Storages/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -132,31 +121,30 @@ namespace LagerSystem.Views
                 return NotFound();
             }
 
-            var position = await _context.Positions
-                .Include(p => p.Pallet)
+            var storage = await _context.Storages
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (position == null)
+            if (storage == null)
             {
                 return NotFound();
             }
 
-            return View(position);
+            return View(storage);
         }
 
-        // POST: Positions/Delete/5
+        // POST: Storages/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var position = await _context.Positions.FindAsync(id);
-            _context.Positions.Remove(position);
+            var storage = await _context.Storages.FindAsync(id);
+            _context.Storages.Remove(storage);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PositionExists(int id)
+        private bool StorageExists(int id)
         {
-            return _context.Positions.Any(e => e.Id == id);
+            return _context.Storages.Any(e => e.Id == id);
         }
     }
 }

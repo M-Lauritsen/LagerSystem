@@ -16,7 +16,6 @@ namespace LagerSystem.Data
             var storage = new Storage()
             {
                 StorageName = "Lager 1",
-                NumberOfRacks = 2,
                 Racks = new List<Rack>()
                 {
                     new Rack {Height = 2, Width = 2,},

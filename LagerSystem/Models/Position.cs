@@ -7,8 +7,8 @@
         public int? PalletId { get; set; }
         public Pallet Pallet { get; set; }
         public Rack Rack { get; set; }
-        public int Height { get; set; }
         public int Width { get; set; }
+        public int Height { get; set; }
 
         public string RackPosition { get; set; }
     }

@@ -17,12 +17,19 @@ namespace LagerSystem.Data
         public DbSet<PalletItems> PalletItems { get; set; }
         protected override void OnModelCreating(ModelBuilder model)
         {
+            model.Entity<Storage>()
+                .HasMany(r => r.Racks)
+                .WithOne(s => s.Storage)
+                .OnDelete(DeleteBehavior.Cascade);
+
             model.Entity<Rack>()
                  .HasMany(p => p.Positions)
-                 .WithOne(r => r.Rack);
+                 .WithOne(r => r.Rack)
+                 .OnDelete(DeleteBehavior.Cascade);
 
             model.Entity<PalletItems>()
                 .HasKey(c => new { c.StockItemId, c.PalletId });
+
         }
     }
 }

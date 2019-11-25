@@ -1,4 +1,4 @@
-﻿@model IEnumerable<LagerSystem.Models.Position>
+﻿@model IEnumerable<LagerSystem.Models.Storage>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,19 +13,19 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Available)
+                @Html.DisplayNameFor(model => model.StorageName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Pallet)
+                @Html.DisplayNameFor(model => model.StreetName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Width)
+                @Html.DisplayNameFor(model => model.City)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Height)
+                @Html.DisplayNameFor(model => model.Postal)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RackPosition)
+                @Html.DisplayNameFor(model => model.Telephone)
             </th>
             <th></th>
         </tr>
@@ -34,19 +34,19 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Available)
+                @Html.DisplayFor(modelItem => item.StorageName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Pallet.Id)
+                @Html.DisplayFor(modelItem => item.StreetName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Width)
+                @Html.DisplayFor(modelItem => item.City)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Height)
+                @Html.DisplayFor(modelItem => item.Postal)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RackPosition)
+                @Html.DisplayFor(modelItem => item.Telephone)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

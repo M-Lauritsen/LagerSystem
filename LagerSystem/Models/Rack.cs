@@ -9,5 +9,7 @@ namespace LagerSystem.Models
         public int Width { get; set; }
         public List<Position> Positions { get; set; }
 
+        public Storage Storage { get; set; }
+
     }
 }

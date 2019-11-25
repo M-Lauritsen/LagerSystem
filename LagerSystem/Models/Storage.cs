@@ -7,12 +7,17 @@ namespace LagerSystem.Models
         public int Id { get; set; }
         public string StorageName { get; set; }
 
-        public int Total { get; set; }
+        public string StreetName { get; set; }
+        public string City { get; set; }
+        public string Postal { get; set; }
+        public string Telephone { get; set; }
 
-        public int NumberOfRacks { get; set; }
         public List<Rack> Racks { get; set; }
 
 
+        /// <summary>
+        /// Til oprettelse af positioner i seed data
+        /// </summary>
         public void Generate()
         {
             int test = 0;

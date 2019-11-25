@@ -1,5 +1,6 @@
 ﻿using LagerSystem.Data;
 using LagerSystem.Models;
+using LagerSystem.Models.StorageViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -19,10 +20,7 @@ namespace LagerSystem.Views
         // GET: Pallets
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Pallets
-                .Include(i => i.PalletItems)
-                .ThenInclude(i => i.StockItem)
-                .OrderBy(i => i.RackPosition).ToListAsync());
+            return View(await _context.Pallets.ToListAsync());
         }
 
         // GET: Pallets/Details/5
@@ -34,8 +32,6 @@ namespace LagerSystem.Views
             }
 
             var pallet = await _context.Pallets
-                .Include(i => i.PalletItems)
-                .ThenInclude(i => i.StockItem)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (pallet == null)
             {
@@ -48,7 +44,10 @@ namespace LagerSystem.Views
         // GET: Pallets/Create
         public IActionResult Create()
         {
-            return View();
+            PalletItemsViewModel viewModel = new PalletItemsViewModel();
+            viewModel.StockItem = _context.StockItems;
+
+            return View(viewModel);
         }
 
         // POST: Pallets/Create

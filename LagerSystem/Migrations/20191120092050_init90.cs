@@ -2,7 +2,7 @@
 
 namespace LagerSystem.Migrations
 {
-    public partial class init : Migration
+    public partial class init90 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,8 +40,10 @@ namespace LagerSystem.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StorageName = table.Column<string>(nullable: true),
-                    Total = table.Column<int>(nullable: false),
-                    NumberOfRacks = table.Column<int>(nullable: false)
+                    StreetName = table.Column<string>(nullable: true),
+                    City = table.Column<string>(nullable: true),
+                    Postal = table.Column<string>(nullable: true),
+                    Telephone = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -53,7 +55,8 @@ namespace LagerSystem.Migrations
                 columns: table => new
                 {
                     PalletId = table.Column<int>(nullable: false),
-                    StockItemId = table.Column<int>(nullable: false)
+                    StockItemId = table.Column<int>(nullable: false),
+                    Amount = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -90,7 +93,7 @@ namespace LagerSystem.Migrations
                         column: x => x.StorageId,
                         principalTable: "Storages",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -120,7 +123,7 @@ namespace LagerSystem.Migrations
                         column: x => x.RackId,
                         principalTable: "Racks",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

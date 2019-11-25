@@ -136,14 +136,20 @@ namespace LagerSystem.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("NumberOfRacks")
-                        .HasColumnType("int");
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Postal")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StorageName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Total")
-                        .HasColumnType("int");
+                    b.Property<string>("StreetName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Telephone")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -173,14 +179,16 @@ namespace LagerSystem.Migrations
 
                     b.HasOne("LagerSystem.Models.Rack", "Rack")
                         .WithMany("Positions")
-                        .HasForeignKey("RackId");
+                        .HasForeignKey("RackId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("LagerSystem.Models.Rack", b =>
                 {
-                    b.HasOne("LagerSystem.Models.Storage", null)
+                    b.HasOne("LagerSystem.Models.Storage", "Storage")
                         .WithMany("Racks")
-                        .HasForeignKey("StorageId");
+                        .HasForeignKey("StorageId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

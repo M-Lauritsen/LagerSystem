@@ -54,14 +54,14 @@ namespace LagerSystem.Views
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Height,Width")] Rack rack)
         {
-            var antal =_context.Racks
+            var antal = _context.Racks
                 .Count();
 
             if (ModelState.IsValid)
             {
                 antal++;
 
-                 rack.Positions = new List<Position>();
+                rack.Positions = new List<Position>();
 
                 for (int i = 1; i <= rack.Width; i++)
                 {
@@ -72,7 +72,7 @@ namespace LagerSystem.Views
 
                 }
 
-                _context.Add(rack);
+                _context.AddRange(rack);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -137,7 +137,7 @@ namespace LagerSystem.Views
             {
                 return NotFound();
             }
-
+            //TODO Funktion til at sætte pallets rackposition til null
             var rack = await _context.Racks
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (rack == null)
