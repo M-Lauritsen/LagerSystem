@@ -47,6 +47,8 @@ namespace LagerSystem.Views
             PalletItemsViewModel viewModel = new PalletItemsViewModel();
             viewModel.StockItem = _context.StockItems;
 
+            ViewBag.data = viewModel;
+
             return View(viewModel);
         }
 
@@ -150,5 +152,7 @@ namespace LagerSystem.Views
         {
             return _context.Pallets.Any(e => e.Id == id);
         }
+
+        
     }
 }
