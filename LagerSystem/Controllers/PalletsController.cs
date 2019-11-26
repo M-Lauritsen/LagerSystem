@@ -57,15 +57,15 @@ namespace LagerSystem.Views
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,RackPosition")] Pallet pallet)
+        public async Task<IActionResult> Create([Bind("Id,RackPosition")] PalletItemsViewModel palletItem)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(pallet);
+                _context.Add(new Pallet());
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(pallet);
+            return View(palletItem.Pallet);
         }
 
         // GET: Pallets/Edit/5

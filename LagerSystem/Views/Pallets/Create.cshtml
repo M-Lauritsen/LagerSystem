@@ -13,8 +13,6 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Pallet.RackPosition" class="control-label"></label>
-                <input asp-for="Pallet.RackPosition" class="form-control" />
                 <span asp-validation-for="Pallet.RackPosition" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -23,51 +21,35 @@
         </form>
     </div>
 
-    <form>
-        <input type="text" id="item" placeholder="Input your keyword" />
-    </form>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.StockItem)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.StockItem)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Add</a> |
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div class="col-md-4">
+        <form asp-action="AddItem">
+            <div class="form-group">
+                <label asp-for="Pallet.PalletItems" class="control-label"></label>
+                <input asp-for="Pallet.PalletItems" id="item" placeholder="Product Search" class="form-control" />
+                <span asp-validation-for="Pallet.PalletItems" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Add Item" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+    </div>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
 
 
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#item').autocomplete({
-                source: '/api/item/search'
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        <script src="~/lib/jquery-ui-1.12.1.custom/external/jquery/jquery.js"></script>
+        <script src="~/lib/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+        <link href="~/lib/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet" />
+        <script>
+            $(document).ready(function () {
+                $('#item').autocomplete({
+                    source: '/api/item/search'
+                });
             });
-        });
-    </script>
-}
+        </script>
+    }
