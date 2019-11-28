@@ -153,6 +153,6 @@ namespace LagerSystem.Views
             return _context.Pallets.Any(e => e.Id == id);
         }
 
-        
+
     }
 }
