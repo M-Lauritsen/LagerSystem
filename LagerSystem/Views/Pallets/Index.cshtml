@@ -9,27 +9,21 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.RackPosition)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
+<div class="card-columns">
+    @foreach (var item in Model)
+    {
+
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-text">
                 @Html.DisplayFor(modelItem => item.RackPosition)
-            </td>
-            <td>
+                </h3>
+                <h5 class="card-title">
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                </h5>
+            </div>
+        </div>
+    }
+</div>
