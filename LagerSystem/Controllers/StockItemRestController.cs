@@ -1,7 +1,6 @@
 ﻿using LagerSystem.Data;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace LagerSystem.Controllers
 {
