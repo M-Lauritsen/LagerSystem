@@ -31,6 +31,8 @@ namespace LagerSystem.Views
             }
 
             var storage = await _context.Storages
+                .Include(r => r.Racks)
+                .ThenInclude(p => p.Positions)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (storage == null)
             {

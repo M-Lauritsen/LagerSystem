@@ -71,6 +71,9 @@ namespace LagerSystem.Views
                     }
 
                 }
+                var storage = _context.Storages.FirstOrDefault();
+
+                rack.StorageId = storage.Id;
 
                 _context.AddRange(rack);
                 await _context.SaveChangesAsync();

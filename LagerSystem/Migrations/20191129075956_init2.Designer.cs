@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LagerSystem.Migrations
 {
     [DbContext(typeof(StorageContext))]
-    [Migration("20191120092050_init90")]
-    partial class init90
+    [Migration("20191129075956_init2")]
+    partial class init2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -100,7 +100,7 @@ namespace LagerSystem.Migrations
                     b.Property<int>("Height")
                         .HasColumnType("int");
 
-                    b.Property<int?>("StorageId")
+                    b.Property<int>("StorageId")
                         .HasColumnType("int");
 
                     b.Property<int>("Width")
@@ -190,7 +190,8 @@ namespace LagerSystem.Migrations
                     b.HasOne("LagerSystem.Models.Storage", "Storage")
                         .WithMany("Racks")
                         .HasForeignKey("StorageId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

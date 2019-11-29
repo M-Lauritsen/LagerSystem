@@ -2,7 +2,7 @@
 
 namespace LagerSystem.Migrations
 {
-    public partial class init90 : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -105,8 +105,8 @@ namespace LagerSystem.Migrations
                     Available = table.Column<bool>(nullable: false),
                     PalletId = table.Column<int>(nullable: true),
                     RackId = table.Column<int>(nullable: true),
-                    Height = table.Column<int>(nullable: false),
                     Width = table.Column<int>(nullable: false),
+                    Height = table.Column<int>(nullable: false),
                     RackPosition = table.Column<string>(nullable: true)
                 },
                 constraints: table =>

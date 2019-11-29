@@ -79,6 +79,7 @@ namespace LagerSystem.Controllers
             }
             return View(viewModel);
         }
+
         //[HttpGet]
         //[Route("api/pallet/{pal}")]
         //public IActionResult Pal(string pal)

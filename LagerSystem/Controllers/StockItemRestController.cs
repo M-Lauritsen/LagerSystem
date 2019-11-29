@@ -17,7 +17,7 @@ namespace LagerSystem.Controllers
 
         [Produces("application/json")]
         [HttpGet("search")]
-        public async Task<IActionResult> Search()
+        public IActionResult Search()
         {
             try
             {
