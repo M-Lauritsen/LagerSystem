@@ -3,7 +3,6 @@ using LagerSystem.Models;
 using LagerSystem.Models.StorageViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -27,13 +26,23 @@ namespace LagerSystem.Views
         // GET: Pallets/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
+            var viewModel = new PalletIndexData();
+            viewModel.Pallets = await _context.Pallets
+                .Include(i => i.PalletItems)
+                .ThenInclude(i => i.StockItem)
+                .ToListAsync();
+
+            if (id != null)
             {
-                return NotFound();
+                ViewData["StockItemsId"] = id.Value;
+                Pallet pall = viewModel.Pallets
+                    .Where(i => i.Id == id.Value).Single();
+                viewModel.StockItems = pall.PalletItems.Select(i => i.StockItem);
             }
 
             var pallet = await _context.Pallets
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (pallet == null)
             {
                 return NotFound();
@@ -76,50 +85,54 @@ namespace LagerSystem.Views
             {
                 return NotFound();
             }
-            PalletItemsViewModel test = new PalletItemsViewModel();
-            var pallet = await _context.Pallets.FindAsync(id);
+            PalletItemsViewModel pallet = new PalletItemsViewModel();
+            pallet.Pallet = await _context.Pallets
+                .Include(s => s.PalletItems)
+                .ThenInclude(s => s.StockItem)
+                .FirstOrDefaultAsync(i => i.Id == id);
+
             if (pallet == null)
             {
                 return NotFound();
             }
-            test.Pallet = pallet;
-            return View(test);
+            //test.Pallet = pallet;
+            return View(pallet);
         }
 
         // POST: Pallets/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Pallet,StockItem")] PalletItemsViewModel palletItems)
-        {
-            if (id != palletItems.Pallet.Id)
-            {
-                return NotFound();
-            }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(int id, [Bind("Id,Pallet,StockItem")] PalletItemsViewModel palletItems)
+        //{
+        //    if (id != palletItems.Pallet.Id)
+        //    {
+        //        return NotFound();
+        //    }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(palletItems.Pallet);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PalletExists(palletItems.Pallet.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(palletItems.Pallet);
-        }
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            _context.Update(palletItems.Pallet);
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!PalletExists(palletItems.Pallet.Id))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(palletItems.Pallet);
+        //}
 
         // GET: Pallets/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -155,26 +168,27 @@ namespace LagerSystem.Views
             return _context.Pallets.Any(e => e.Id == id);
         }
 
-
-        public async Task<ActionResult> AddItem(int id, [Bind("Id,Pallet,StockItem")] PalletItemsViewModel vm)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(Pallet pallet, [Bind("Id,Pallet,StockItem")] PalletItemsViewModel vm)
         {
             var test = _context.StockItems.Where(i => i.Name == vm.StockItem.Name).Select(i => i.Id).FirstOrDefault();
 
-            //if (id != vm.Pallet.Id)
-            //{
-            //    return NotFound();
-            //}
+            if (pallet.Id != vm.Pallet.Id)
+            {
+                return NotFound();
+            }
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var tesst = new PalletItems
+                    var item = new PalletItems
                     {
                         StockItemId = test,
                         PalletId = vm.Pallet.Id,
                     };
 
-                    _context.PalletItems.Add(tesst);
+                    _context.PalletItems.Add(item);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -191,7 +205,7 @@ namespace LagerSystem.Views
             }
 
 
-            return RedirectToAction(nameof(Edit));
+            return View(vm);
         }
 
     }

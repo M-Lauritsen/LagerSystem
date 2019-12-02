@@ -89,7 +89,7 @@ namespace LagerSystem.Views
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Available,PalletId,Height,Width,RackPosition")] Position position, Pallet pallet)
+        public IActionResult Edit(int id, [Bind("Id,Available,PalletId,Height,Width,RackPosition")] Position position, Pallet pallet)
         {
             if (id != position.Id)
             {
@@ -101,11 +101,12 @@ namespace LagerSystem.Views
                 try
                 {
                     position.Available = false;
+                    pallet.Position = position;
                     pallet.RackPosition = position.RackPosition;
 
                     _context.Update(position);
-                    _context.Update(position);
-                    await _context.SaveChangesAsync();
+                    _context.Update(pallet);
+                    //_context.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)
                 {

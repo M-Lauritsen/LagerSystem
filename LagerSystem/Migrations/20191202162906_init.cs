@@ -83,7 +83,7 @@ namespace LagerSystem.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Height = table.Column<int>(nullable: false),
                     Width = table.Column<int>(nullable: false),
-                    StorageId = table.Column<int>(nullable: true)
+                    StorageId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
