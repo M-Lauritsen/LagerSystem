@@ -3,6 +3,7 @@ using LagerSystem.Models;
 using LagerSystem.Models.StorageViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -45,7 +46,7 @@ namespace LagerSystem.Views
         public IActionResult Create()
         {
             PalletItemsViewModel viewModel = new PalletItemsViewModel();
-            viewModel.StockItem = _context.StockItems;
+            viewModel.StockItems = _context.StockItems;
 
             ViewBag.data = viewModel;
 
@@ -75,13 +76,14 @@ namespace LagerSystem.Views
             {
                 return NotFound();
             }
-
+            PalletItemsViewModel test = new PalletItemsViewModel();
             var pallet = await _context.Pallets.FindAsync(id);
             if (pallet == null)
             {
                 return NotFound();
             }
-            return View(pallet);
+            test.Pallet = pallet;
+            return View(test);
         }
 
         // POST: Pallets/Edit/5
@@ -89,9 +91,9 @@ namespace LagerSystem.Views
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,RackPosition")] Pallet pallet)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Pallet,StockItem")] PalletItemsViewModel palletItems)
         {
-            if (id != pallet.Id)
+            if (id != palletItems.Pallet.Id)
             {
                 return NotFound();
             }
@@ -100,12 +102,12 @@ namespace LagerSystem.Views
             {
                 try
                 {
-                    _context.Update(pallet);
+                    _context.Update(palletItems.Pallet);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PalletExists(pallet.Id))
+                    if (!PalletExists(palletItems.Pallet.Id))
                     {
                         return NotFound();
                     }
@@ -116,7 +118,7 @@ namespace LagerSystem.Views
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(pallet);
+            return View(palletItems.Pallet);
         }
 
         // GET: Pallets/Delete/5
@@ -153,6 +155,44 @@ namespace LagerSystem.Views
             return _context.Pallets.Any(e => e.Id == id);
         }
 
+
+        public async Task<ActionResult> AddItem(int id, [Bind("Id,Pallet,StockItem")] PalletItemsViewModel vm)
+        {
+            var test = _context.StockItems.Where(i => i.Name == vm.StockItem.Name).Select(i => i.Id).FirstOrDefault();
+
+            //if (id != vm.Pallet.Id)
+            //{
+            //    return NotFound();
+            //}
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var tesst = new PalletItems
+                    {
+                        StockItemId = test,
+                        PalletId = vm.Pallet.Id,
+                    };
+
+                    _context.PalletItems.Add(tesst);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!PalletExists(vm.Pallet.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
+
+
+            return RedirectToAction(nameof(Edit));
+        }
 
     }
 }

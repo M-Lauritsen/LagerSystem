@@ -1,8 +1,6 @@
 ﻿using LagerSystem.Data;
 using LagerSystem.Models;
-using LagerSystem.Models.StorageViewModel;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.Linq;
@@ -59,47 +57,7 @@ namespace LagerSystem.Controllers
             return View(storage);
         }
 
-        [HttpGet]
-        [Route("api/item/{id}")]
-        public async Task<IActionResult> Index(int? id)
-        {
-            var viewModel = new PalletIndexData();
-            viewModel.Pallets = await _context.Pallets
-                    .Include(i => i.PalletItems)
-                    .ThenInclude(i => i.StockItem)
-                    .OrderBy(i => i.RackPosition)
-                .ToListAsync();
 
-            if (id != null)
-            {
-
-                Pallet pallet = viewModel.Pallets
-                    .Where(i => i.Id == id.Value).Single();
-                viewModel.StockItems = pallet.PalletItems.Select(i => i.StockItem);
-            }
-            return View(viewModel);
-        }
-
-        //[HttpGet]
-        //[Route("api/pallet/{pal}")]
-        //public IActionResult Pal(string pal)
-        //{
-        //    var test = _context.Pallets
-        //        .Include(i => i.Items)
-        //        .Where(p => p.RackPosition == pal);
-
-        //    return Json(test);
-        //}
-
-        [HttpGet]
-        [Route("api/pos/{pos}")]
-        public IActionResult Position(string pos)
-        {
-            var test = _context.Positions
-                .Where(p => p.RackPosition == pos);
-
-            return Json(test);
-        }
 
         public IActionResult Privacy()
         {
