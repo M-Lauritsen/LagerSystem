@@ -209,5 +209,34 @@ namespace LagerSystem.Views
             return View(vm);
         }
 
+        public async Task<IActionResult> DeleteItem(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var position = await _context.PalletItems
+                .Include(p => p.StockItem)
+                .FirstOrDefaultAsync(m => m.StockItemId == id);
+
+                
+                _context.PalletItems.Remove(position);
+                await _context.SaveChangesAsync();
+            if (position == null)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction("Edit" ,new { @id = position.PalletId});
+        }
+
+        
+
+        private bool PositionExists(int id)
+        {
+            return _context.Positions.Any(e => e.Id == id);
+        }
+
     }
 }
