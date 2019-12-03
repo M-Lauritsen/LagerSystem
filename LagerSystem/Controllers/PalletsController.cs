@@ -172,7 +172,7 @@ namespace LagerSystem.Views
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(Pallet pallet, [Bind("Id,Pallet,StockItem")] PalletItemsViewModel vm)
         {
-            var test = _context.StockItems.Where(i => i.Name == vm.StockItem.Name).Select(i => i.Id).FirstOrDefault();
+            var id = _context.StockItems.Where(i => i.Name == vm.StockItem.Name).Select(i => i.Id).FirstOrDefault();
 
             if (pallet.Id != vm.Pallet.Id)
             {
@@ -184,12 +184,13 @@ namespace LagerSystem.Views
                 {
                     var item = new PalletItems
                     {
-                        StockItemId = test,
+                        StockItemId = id,
                         PalletId = vm.Pallet.Id,
                     };
 
                     _context.PalletItems.Add(item);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Edit));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
