@@ -10,7 +10,7 @@ namespace LagerSystem.Data
     {
         public void InitData(StorageContext context)
         {
-            if (context.Storages.Any())
+            if (context.StockItems.Any())
             {
                 return;
             }
@@ -54,6 +54,7 @@ namespace LagerSystem.Data
                 stockItems.Add(new StockItem
                 {
                     Name = words[0],
+                    Amount = Convert.ToInt32(words[1])
                 });
 
             }

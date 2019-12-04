@@ -3,6 +3,7 @@ using LagerSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -101,12 +102,13 @@ namespace LagerSystem.Views
                 try
                 {
                     position.Available = false;
+                    pallet.Id = Convert.ToInt32(position.PalletId);
                     pallet.Position = position;
                     pallet.RackPosition = position.RackPosition;
 
                     _context.Update(position);
                     _context.Update(pallet);
-                    //_context.SaveChanges();
+                    _context.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
