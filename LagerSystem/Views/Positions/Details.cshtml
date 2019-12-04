@@ -1,4 +1,4 @@
-﻿@model LagerSystem.Models.Position
+﻿@model LagerSystem.Models.StorageViewModel.PositionDetailViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -10,39 +10,56 @@
     <h4>Position</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Available)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Position.Available)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Available)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Position.Available)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Pallet)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Position.Pallet)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Pallet.Id)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Position.Pallet.Id)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Height)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Position.Height)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Height)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Position.Height)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Width)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Position.Width)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Width)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Position.Width)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.RackPosition)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Position.RackPosition)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RackPosition)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Position.RackPosition)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.Position.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+
+@if (@Model.Position.Available != true)
+{
+    <div class="card-columns">
+        <div class="card">
+            <div class="card-body">
+                @foreach (var item in Model.Position.Pallet.PalletItems)
+                {
+                    <h6 class="card-text">
+                        @Html.DisplayFor(modelItem => item.StockItem.Name)<br />
+                    </h6>
+                }
+            </div>
+        </div>
+    </div>
+}
+

@@ -1,5 +1,6 @@
 ﻿using LagerSystem.Data;
 using LagerSystem.Models;
+using LagerSystem.Models.StorageViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -28,13 +29,15 @@ namespace LagerSystem.Views
         // GET: Positions/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            PositionDetailViewModel position = new PositionDetailViewModel();
             if (id == null)
             {
                 return NotFound();
             }
-
-            var position = await _context.Positions
+            position.Position = await _context.Positions
                 .Include(p => p.Pallet)
+                .ThenInclude(pi => pi.PalletItems)
+                        .ThenInclude(s => s.StockItem)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (position == null)
             {
