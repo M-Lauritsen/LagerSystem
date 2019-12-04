@@ -15,34 +15,6 @@ namespace LagerSystem.Data
                 return;
             }
 
-            //var storage = new Storage()
-            //{
-            //    StorageName = "Lager 1",
-            //    Racks = new List<Rack>()
-            //    {
-            //        new Rack {Height = 2, Width = 2,},
-            //        new Rack {Height = 3, Width = 3,}
-            //    }
-
-            //};
-            //storage.Generate();
-            //context.Storages.Add(storage);
-            //context.SaveChanges();
-
-            //var pallet = new Pallet[]
-            //{
-            //    new Pallet{},
-            //    new Pallet{},
-            //    new Pallet{},
-            //};
-
-
-            //foreach (var item in pallet)
-            //{
-            //    context.Pallets.Add(item);
-            //}
-            //context.SaveChanges();
-
             string line;
             List<StockItem> stockItems = new List<StockItem>();
 
@@ -58,14 +30,6 @@ namespace LagerSystem.Data
                 });
 
             }
-
-            //var stock = new StockItem[]
-            //{
-            //    new StockItem { Name = "Cola", Amount = 1000},
-            //    new StockItem { Name = "Cola Light", Amount = 1000},
-            //    new StockItem { Name = "Cola Zero", Amount = 1000},
-            //    new StockItem { Name = "Cola Cherry", Amount = 1000},
-            //};
             foreach (var item in stockItems)
             {
                 context.StockItems.Add(item);
