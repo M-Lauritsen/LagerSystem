@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace LagerSystem.Models.StorageViewModel
+﻿namespace LagerSystem.Models.StorageViewModel
 {
     public class PositionDetailViewModel
     {

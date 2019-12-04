@@ -27,8 +27,8 @@ namespace LagerSystem.Controllers
             {
                 string term = HttpContext.Request.Query["term"].ToString();
                 var names = _context.StockItems.Where(s => s.Name.Contains(term)).Select(s => s.Name).ToList();
-               // var id = _context.StockItems.Where(i => i.Name.Contains() ).Select(i => i.Id).FirstOrDefault();
-                
+                // var id = _context.StockItems.Where(i => i.Name.Contains() ).Select(i => i.Id).FirstOrDefault();
+
 
 
                 return Ok(names);

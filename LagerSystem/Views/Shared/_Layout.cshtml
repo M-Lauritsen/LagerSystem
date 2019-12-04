@@ -7,16 +7,16 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="~/css/sidebar.css" rel="stylesheet" />
-    
+
 </head>
 <body>
     <header style="padding:1.5%">
-
     </header>
     <!--
-    SideMenu    
+    SideMenu
     -->
-    <div class="area"></div><nav class="main-menu">
+    <div class="area"></div>
+    <nav class="main-menu">
         <ul>
             <li>
                 <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
@@ -26,6 +26,14 @@
                     </span>
                 </a>
 
+            </li>
+            <li>
+                <a class="nav-link" asp-area="" asp-controller="Racks" asp-action="Index">
+                    <i class="fa fa-align-justify fa-2x"></i>
+                    <span class="nav-text">
+                        Racks
+                    </span>
+                </a>
             </li>
             <li class="has-subnav">
                 <a class="nav-link" asp-area="" asp-controller="Positions" asp-action="Index">
@@ -52,18 +60,11 @@
                     </span>
                 </a>
             </li>
-            <li>
-                <a class="nav-link" asp-area="" asp-controller="Racks" asp-action="Index">
-                    <i class="fa fa-align-justify fa-2x"></i>
-                    <span class="nav-text">
-                        Racks
-                    </span>
-                </a>
-            </li>
+
         </ul>
     </nav>
     <!--
-    View    
+    View
     -->
     <div class="container">
         <main role="main" class="pb-3">
@@ -71,7 +72,7 @@
         </main>
     </div>
     <!--
-    Footer    
+    Footer
     -->
     <footer class="border-top footer text-muted">
         <div class="container">

@@ -220,18 +220,18 @@ namespace LagerSystem.Views
                 .Include(p => p.StockItem)
                 .FirstOrDefaultAsync(m => m.StockItemId == id);
 
-                
-                _context.PalletItems.Remove(position);
-                await _context.SaveChangesAsync();
+
+            _context.PalletItems.Remove(position);
+            await _context.SaveChangesAsync();
             if (position == null)
             {
                 return NotFound();
             }
 
-            return RedirectToAction("Edit" ,new { @id = position.PalletId});
+            return RedirectToAction("Edit", new { @id = position.PalletId });
         }
 
-        
+
 
         private bool PositionExists(int id)
         {
