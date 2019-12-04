@@ -20,14 +20,14 @@
 
         <div class="card">
             <div class="card-body">
-                <h3 class="card-text">
+                <h6 class="card-text">
                     Position: @Html.DisplayFor(modelItem => item.RackPosition)
-                </h3>
-                <h5 class="card-title">
+                </h6>
+                <h6 class="card-title">
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                     <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </h5>
+                </h6>
             </div>
         </div>
     }

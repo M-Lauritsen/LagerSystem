@@ -81,7 +81,12 @@ namespace LagerSystem.Views
 
             PositionDetailViewModel position = new PositionDetailViewModel();
 
-            position.Position = await _context.Positions.FindAsync(id);
+            position.Position = await _context.Positions
+                .Include(p => p.Pallet)
+                .ThenInclude(pi => pi.PalletItems)
+                        .ThenInclude(s => s.StockItem)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
             if (position == null)
             {
                 return NotFound();
