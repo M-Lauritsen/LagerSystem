@@ -3,6 +3,7 @@ using LagerSystem.Models;
 using LagerSystem.Models.StorageViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,6 +27,34 @@ namespace LagerSystem.Controllers
             {
                 string term = HttpContext.Request.Query["term"].ToString();
                 var names = _context.StockItems.Where(s => s.Name.Contains(term)).Select(s => s.Name).ToList();
+               // var id = _context.StockItems.Where(i => i.Name.Contains() ).Select(i => i.Id).FirstOrDefault();
+                
+
+
+                return Ok(names);
+            }
+            catch
+            {
+
+                return BadRequest();
+            }
+        }
+
+        [HttpGet("searchpallet")]
+        public IActionResult Searchpallet()
+        {
+            try
+            {
+                string term = HttpContext.Request.Query["term"].ToString();
+                var names = _context.Positions
+                    .Include(p => p.Pallet)
+                        .ThenInclude(i => i.PalletItems)
+                            .ThenInclude(s => s.StockItem)
+                    .Where(s => s.Id == Convert.ToInt32(term)).Select(s => s.Pallet.PalletItems);
+                // var id = _context.StockItems.Where(i => i.Name.Contains() ).Select(i => i.Id).FirstOrDefault();
+
+
+
                 return Ok(names);
             }
             catch

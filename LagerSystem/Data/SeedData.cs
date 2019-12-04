@@ -18,7 +18,7 @@ namespace LagerSystem.Data
             string line;
             List<StockItem> stockItems = new List<StockItem>();
 
-            StreamReader file = new StreamReader(@"C:\Users\i3028\source\repos\LagerSystem\LagerSystem\Data\MOCK_DATA.csv");
+            StreamReader file = new StreamReader(@"C:\Users\Z003XMPW\Source\Repos\LagerSystem\LagerSystem\Data\MOCK_DATA.csv");
 
             while ((line = file.ReadLine()) != null)
             {

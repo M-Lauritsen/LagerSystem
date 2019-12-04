@@ -79,12 +79,14 @@ namespace LagerSystem.Views
                 return NotFound();
             }
 
-            var position = await _context.Positions.FindAsync(id);
+            PositionDetailViewModel position = new PositionDetailViewModel();
+
+            position.Position = await _context.Positions.FindAsync(id);
             if (position == null)
             {
                 return NotFound();
             }
-            ViewData["PalletId"] = new SelectList(_context.Pallets, "Id", "Id", position.PalletId);
+            ViewData["PalletId"] = new SelectList(_context.Pallets, "Id", "Id", position.Position.PalletId);
             return View(position);
         }
 

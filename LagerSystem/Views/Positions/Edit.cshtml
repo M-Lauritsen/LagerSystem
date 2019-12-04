@@ -1,4 +1,4 @@
-﻿@model LagerSystem.Models.Position
+﻿@model LagerSystem.Models.StorageViewModel.PositionDetailViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -6,44 +6,47 @@
 
 <h1>Edit</h1>
 
-<h4>Position</h4>
+<h4>Position: @Html.DisplayFor(model => model.Position.RackPosition)</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+
+    <div class="col-md-6">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Available" /> @Html.DisplayNameFor(model => model.Available)
-                </label>
-            </div>
+            <input type="hidden" asp-for="Position.Id" />
             <div class="form-group">
-                <label asp-for="PalletId" class="control-label"></label>
-                <select asp-for="PalletId" class="form-control" asp-items="ViewBag.PalletId"></select>
-                <span asp-validation-for="PalletId" class="text-danger"></span>
+                <label asp-for="Position.PalletId" class="control-label"></label>
+                <input asp-for="Position.PalletId" id="item" class="form-control" asp-items="ViewBag.PalletId" />
+                <span asp-validation-for="Position.PalletId" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Height" class="control-label"></label>
-                <input asp-for="Height" class="form-control" />
-                <span asp-validation-for="Height" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Width" class="control-label"></label>
-                <input asp-for="Width" class="form-control" />
-                <span asp-validation-for="Width" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RackPosition" class="control-label"></label>
-                <input asp-for="RackPosition" class="form-control" />
-                <span asp-validation-for="RackPosition" class="text-danger"></span>
-            </div>
+            @*<div class="form-group">
+                <label asp-for="Position.PalletId" class="control-label"></label>
+                <input asp-for="Position.PalletId" id="item" class="form-control" />
+                <span asp-validation-for="Position.PalletId" class="text-danger"></span>
+
+            </div>*@
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
+@if (Model.Position.PalletId != null)
+{ 
+<div class="card-columns">
+    @foreach (var item in Model.Pallet.PalletItems)
+    {
+    <div class="card">
+        <div class="card-body">
+            <h6 class="card-text">
+                @Html.DisplayFor(modelItem => item.StockItem.Name)
+
+            </h6>
+        </div>
+    </div>
+    }
+</div>
+}
 
 <div>
     <a asp-action="Index">Back to List</a>
@@ -51,4 +54,14 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/lib/jquery-ui-1.12.1.custom/external/jquery/jquery.js"></script>
+    <script src="~/lib/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+    <link href="~/lib/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet" />
+    <script>
+            $(document).ready(function () {
+                $('#item').autocomplete({
+                    source: '/api/item/searchpallet'
+                });
+            });
+    </script>
 }
