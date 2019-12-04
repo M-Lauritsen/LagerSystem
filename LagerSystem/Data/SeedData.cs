@@ -18,17 +18,18 @@ namespace LagerSystem.Data
             string line;
             List<StockItem> stockItems = new List<StockItem>();
 
-            StreamReader file = new StreamReader(@"C:\Users\Z003XMPW\Source\Repos\LagerSystem\LagerSystem\Data\MOCK_DATA.csv");
-
-            while ((line = file.ReadLine()) != null)
+            using (StreamReader file = new StreamReader(@"C:\Users\i3028\source\repos\LagerSystem\LagerSystem\Data\MOCK_DATA.csv"))
             {
-                var words = line.Split(new[] { ',' });
-                stockItems.Add(new StockItem
+                while ((line = file.ReadLine()) != null)
                 {
-                    Name = words[0],
-                    Amount = Convert.ToInt32(words[1])
-                });
+                    var words = line.Split(new[] { ',' });
+                    stockItems.Add(new StockItem
+                    {
+                        Name = words[0],
+                        Amount = Convert.ToInt32(words[1])
+                    });
 
+                }
             }
             foreach (var item in stockItems)
             {

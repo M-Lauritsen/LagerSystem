@@ -25,15 +25,21 @@
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.PalletItems)
         </dt>
-        <dd>
-            @{
-                foreach (var course in Model.PalletItems)
-                {
-                    @course.Pallet.Id @: @course.Pallet.RackPosition <br />
-                }
-            }
-        </dd>
     </dl>
+    <div class="card-columns">
+        @foreach (var item in Model.PalletItems)
+        {
+
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-text">
+                        Pallet: @item.Pallet.Id <br />
+                        Position: @Html.DisplayFor(modelItem => item.Pallet.RackPosition)
+                    </h6>
+                </div>
+            </div>
+        }
+    </div>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
