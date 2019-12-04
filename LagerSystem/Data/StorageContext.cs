@@ -30,6 +30,9 @@ namespace LagerSystem.Data
             model.Entity<PalletItems>()
                 .HasKey(c => new { c.StockItemId, c.PalletId });
 
+            model.Entity<StockItem>()
+                .HasIndex(n => n.Name)
+                .IsUnique();
         }
     }
 }

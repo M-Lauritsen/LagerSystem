@@ -147,6 +147,13 @@ namespace LagerSystem.Migrations
                 name: "IX_Racks_StorageId",
                 table: "Racks",
                 column: "StorageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StockItems_Name",
+                table: "StockItems",
+                column: "Name",
+                unique: true,
+                filter: "[Name] IS NOT NULL");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

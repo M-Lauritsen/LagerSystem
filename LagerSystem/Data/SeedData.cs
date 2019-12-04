@@ -1,5 +1,7 @@
 ﻿using LagerSystem.Models;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace LagerSystem.Data
@@ -13,42 +15,57 @@ namespace LagerSystem.Data
                 return;
             }
 
-            var storage = new Storage()
+            //var storage = new Storage()
+            //{
+            //    StorageName = "Lager 1",
+            //    Racks = new List<Rack>()
+            //    {
+            //        new Rack {Height = 2, Width = 2,},
+            //        new Rack {Height = 3, Width = 3,}
+            //    }
+
+            //};
+            //storage.Generate();
+            //context.Storages.Add(storage);
+            //context.SaveChanges();
+
+            //var pallet = new Pallet[]
+            //{
+            //    new Pallet{},
+            //    new Pallet{},
+            //    new Pallet{},
+            //};
+
+
+            //foreach (var item in pallet)
+            //{
+            //    context.Pallets.Add(item);
+            //}
+            //context.SaveChanges();
+
+            string line;
+            List<StockItem> stockItems = new List<StockItem>();
+
+            StreamReader file = new StreamReader(@"C:\Users\i3028\source\repos\LagerSystem\LagerSystem\Data\MOCK_DATA.csv");
+
+            while ((line = file.ReadLine()) != null)
             {
-                StorageName = "Lager 1",
-                Racks = new List<Rack>()
+                var words = line.Split(new[] { ',' });
+                stockItems.Add(new StockItem
                 {
-                    new Rack {Height = 2, Width = 2,},
-                    new Rack {Height = 3, Width = 3,}
-                }
+                    Name = words[0],
+                });
 
-            };
-            storage.Generate();
-            context.Storages.Add(storage);
-            context.SaveChanges();
-
-            var pallet = new Pallet[]
-            {
-                new Pallet{},
-                new Pallet{},
-                new Pallet{},
-            };
-
-
-            foreach (var item in pallet)
-            {
-                context.Pallets.Add(item);
             }
-            context.SaveChanges();
 
-            var stock = new StockItem[]
-            {
-                new StockItem { Name = "Cola", Amount = 1000},
-                new StockItem { Name = "Cola Light", Amount = 1000},
-                new StockItem { Name = "Cola Zero", Amount = 1000},
-                new StockItem { Name = "Cola Cherry", Amount = 1000},
-            };
-            foreach (var item in stock)
+            //var stock = new StockItem[]
+            //{
+            //    new StockItem { Name = "Cola", Amount = 1000},
+            //    new StockItem { Name = "Cola Light", Amount = 1000},
+            //    new StockItem { Name = "Cola Zero", Amount = 1000},
+            //    new StockItem { Name = "Cola Cherry", Amount = 1000},
+            //};
+            foreach (var item in stockItems)
             {
                 context.StockItems.Add(item);
             }
