@@ -10,14 +10,14 @@
 <hr />
 <div class="col-md-4">
     <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Pallet.Id"  />
-            <div class="form-group">
-                <label asp-for="StockItem.Name" class="control-label"></label>          
-                    <input asp-for="StockItem.Name" id="item" placeholder="Product Search" class="form-control" />                
-                    <span asp-validation-for="StockItem.Name" class="text-danger"></span>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Pallet.Id" />
+        <div class="form-group">
+            <label asp-for="StockItem.Name" class="control-label"></label>
+            <input asp-for="StockItem.Name" id="item" placeholder="Product Search" class="form-control" />
+            <span asp-validation-for="StockItem.Name" class="text-danger"></span>
 
-                </div>
+        </div>
         <div class="form-group">
             <input type="submit" value="Add Item" class="btn btn-primary" />
         </div>
@@ -25,19 +25,19 @@
 </div>
 
 <div class="card-columns">
-        <div class="card">
-            <div class="card-body">
-                @foreach (var item in Model.Pallet.PalletItems)
-                {
-                    <h6 class="card-text">
-                        @Html.DisplayFor(modelItem => item.StockItem.Name)<br />
-                    </h6>
-                    <h6 class="card-title">
-                        <a asp-action="DeleteItem" asp-route-id="@item.StockItem.Id">Delete<input type="hidden" asp-for="Pallet.Id" /></a>
-                    </h6>
-                }
-            </div>
+    <div class="card">
+        <div class="card-body">
+            @foreach (var item in Model.Pallet.PalletItems)
+            {
+                <h6 class="card-text">
+                    @Html.DisplayFor(modelItem => item.StockItem.Name)<br />
+                </h6>
+                <h6 class="card-title">
+                    <a asp-action="DeleteItem" asp-route-id="@item.StockItem.Id">Delete<input type="hidden" asp-for="Pallet.Id" /></a>
+                </h6>
+            }
         </div>
+    </div>
 </div>
 
 
@@ -50,11 +50,6 @@
     <script src="~/lib/jquery-ui-1.12.1.custom/external/jquery/jquery.js"></script>
     <script src="~/lib/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
     <link href="~/lib/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet" />
-    <script>
-            $(document).ready(function () {
-                $('#item').autocomplete({
-                    source: '/api/item/search'
-                });
-            });
-    </script>
+
+    <script src="~/js/Autocomplete.js"></script>
 }

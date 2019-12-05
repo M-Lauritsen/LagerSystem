@@ -17,9 +17,16 @@ namespace LagerSystem.Views
         }
 
         // GET: StockItems
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _context.StockItems.ToListAsync());
+            var inStock = from i in _context.StockItems select i;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                inStock = inStock.Where(n => n.Name.Contains(searchString));
+            }
+
+            return View(await inStock.ToListAsync());
         }
 
         // GET: StockItems/Details/5

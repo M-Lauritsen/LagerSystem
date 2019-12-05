@@ -53,5 +53,7 @@ namespace LagerSystem
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+
+   
     }
 }

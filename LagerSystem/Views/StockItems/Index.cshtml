@@ -9,6 +9,19 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+
+
+
+<form asp-controller="StockItems" asp-action="Index">
+    <p>
+
+        Search product: <input type="text" id="item" name="searchString" />
+        <input type="submit" value="Filter" />
+
+
+    </p>
+</form>
 <table class="table">
     <thead>
         <tr>
@@ -22,20 +35,33 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Amount)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+
+        }
     </tbody>
+
 </table>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/lib/jquery-ui-1.12.1.custom/external/jquery/jquery.js"></script>
+    <script src="~/lib/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+    <link href="~/lib/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet" />
+
+    <script src="~/js/Autocomplete.js"></script>
+}
+
