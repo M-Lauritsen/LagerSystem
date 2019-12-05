@@ -1,10 +1,14 @@
 ﻿@model IEnumerable<LagerSystem.Models.Position>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Positions";
 }
 
-<h1>Index</h1>
+<h1>Positions</h1>
+<h4>Total: @Model.Count()</h4>
+
+
+
 @* Styling? *@
 @*https://materializecss.com/tooltips.html*@
 <div class="card-columns">

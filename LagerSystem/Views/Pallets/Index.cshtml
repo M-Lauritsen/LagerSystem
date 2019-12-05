@@ -1,10 +1,11 @@
 ﻿@model IEnumerable<LagerSystem.Models.Pallet>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Pallets";
 }
 
-<h1>Index</h1>
+<h1>Pallets</h1>
+<h4>Total: @Model.Count()</h4>
 
 <div class="col-md-4">
     <form asp-action="Create">

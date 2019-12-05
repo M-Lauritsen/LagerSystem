@@ -25,14 +25,7 @@ namespace LagerSystem.Controllers
             {
                 return RedirectToAction("Create", "Home");
             }
-            //var test = from a in _context.Storages
-            //           .Include(r => r.Racks)
-            //           .ThenInclude(p => p.Positions)
-            //           .ThenInclude(p => p.Pallet)
-            //           select a;
-
             return View();
-
         }
 
         // GET: Storages/Create
@@ -41,9 +34,6 @@ namespace LagerSystem.Controllers
             return View();
         }
 
-        // POST: Storages/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,StorageName,StreetName,City,Postal,Telephone")] Storage storage)
@@ -55,13 +45,6 @@ namespace LagerSystem.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(storage);
-        }
-
-
-
-        public IActionResult Privacy()
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
