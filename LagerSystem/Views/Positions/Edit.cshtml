@@ -19,18 +19,12 @@
             <input type="hidden" asp-for="Position.Width" />
             <input type="hidden" asp-for="Position.RackPosition" />
             <input type="hidden" asp-for="Position.PalletId" />
-        
+
             <div class="form-group">
                 <label asp-for="Pallet.Id" class="control-label"></label>
-                <select asp-for="Pallet.Id" id="item" class="form-control" asp-items="ViewBag.PalletId" ></select>
+                <select asp-for="Pallet.Id" id="item" class="form-control" asp-items="ViewBag.PalletId"></select>
                 <span asp-validation-for="Pallet.Id" class="text-danger"></span>
             </div>
-            @*<div class="form-group">
-                    <label asp-for="Position.PalletId" class="control-label"></label>
-                    <input asp-for="Position.PalletId" id="item" class="form-control" />
-                    <span asp-validation-for="Position.PalletId" class="text-danger"></span>
-
-                </div>*@
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

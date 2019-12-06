@@ -13,7 +13,6 @@
 @*https://materializecss.com/tooltips.html*@
 <div class="card-columns">
     @foreach (var item in Model)
-    {@if (item.PalletId == null)
     {
         <div class="card">
             <div class="card-body">
@@ -24,9 +23,12 @@
                 <h6 class="card-title">
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    @if (item.PalletId != null)
+                    {
+                    <a asp-action="RemovePallet" asp-route-id="@item.Id">Remove Pallet</a>
+                    }
                 </h6>
             </div>
         </div>
-        }
     }
 </div>

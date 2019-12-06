@@ -22,8 +22,8 @@ namespace LagerSystem.Views
         // GET: Positions
         public async Task<IActionResult> Index()
         {
-            var storageContext = _context.Positions.Include(p => p.Pallet).OrderBy(r => r.RackPosition);
-            return View(await storageContext.ToListAsync());
+            var positions = _context.Positions.Include(p => p.Pallet).OrderBy(r => r.RackPosition);
+            return View(await positions.ToListAsync());
         }
 
         // GET: Positions/Details/5
@@ -169,6 +169,34 @@ namespace LagerSystem.Views
         private bool PositionExists(int id)
         {
             return _context.Positions.Any(e => e.Id == id);
+        }
+
+        public async Task<IActionResult> RemovePallet(int? id, Position pos)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            pos = await _context.Positions
+                .Include(p => p.Pallet)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            pos.PalletId = null;
+            pos.Available = true;
+
+            pos.Pallet.RackPosition = null;
+
+            _context.Update(pos);
+            _context.SaveChanges();
+            
+
+            if (pos == null)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }
