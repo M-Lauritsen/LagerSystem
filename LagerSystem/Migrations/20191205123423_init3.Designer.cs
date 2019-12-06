@@ -4,14 +4,16 @@ using LagerSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LagerSystem.Migrations
 {
     [DbContext(typeof(StorageContext))]
-    partial class StorageContextModelSnapshot : ModelSnapshot
+    [Migration("20191205123423_init3")]
+    partial class init3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,7 +70,7 @@ namespace LagerSystem.Migrations
                     b.Property<int?>("PalletId")
                         .HasColumnType("int");
 
-                    b.Property<int>("RackId")
+                    b.Property<int?>("RackId")
                         .HasColumnType("int");
 
                     b.Property<string>("RackPosition")
@@ -184,8 +186,7 @@ namespace LagerSystem.Migrations
                     b.HasOne("LagerSystem.Models.Rack", "Rack")
                         .WithMany("Positions")
                         .HasForeignKey("RackId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("LagerSystem.Models.Rack", b =>

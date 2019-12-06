@@ -22,12 +22,18 @@
         <div class="card">
             <div class="card-body">
                 <h6 class="card-text">
+                    Palle nummer: @Html.DisplayFor(modelitem => item.Id)  <br />
                     Position: @Html.DisplayFor(modelItem => item.RackPosition)
                 </h6>
                 <h6 class="card-title">
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    @if (item.RackPosition == null)
+                    {
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    }
+                   
+
                 </h6>
             </div>
         </div>

@@ -13,6 +13,7 @@
 @*https://materializecss.com/tooltips.html*@
 <div class="card-columns">
     @foreach (var item in Model)
+    {@if (item.PalletId == null)
     {
         <div class="card">
             <div class="card-body">
@@ -26,5 +27,6 @@
                 </h6>
             </div>
         </div>
+        }
     }
 </div>

@@ -100,9 +100,9 @@ namespace LagerSystem.Views
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("Id,Available,PalletId,Height,Width,RackPosition")] Position position, Pallet pallet)
+        public IActionResult Edit(int id, [Bind("Id,Position,Pallet,")] PositionDetailViewModel vm)
         {
-            if (id != position.Id)
+            if (id != vm.Position.Id)
             {
                 return NotFound();
             }
@@ -111,18 +111,17 @@ namespace LagerSystem.Views
             {
                 try
                 {
-                    position.Available = false;
-                    pallet.Id = Convert.ToInt32(position.PalletId);
-                    pallet.Position = position;
-                    pallet.RackPosition = position.RackPosition;
+                    vm.Position.Available = false;
+                    vm.Position.PalletId = vm.Pallet.Id;
+                    vm.Pallet.RackPosition = vm.Position.RackPosition;
 
-                    _context.Update(position);
-                    _context.Update(pallet);
+                    _context.Update(vm.Position);
+                    _context.Update(vm.Pallet);
                     _context.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PositionExists(position.Id))
+                    if (!PositionExists(vm.Position.Id))
                     {
                         return NotFound();
                     }
@@ -133,8 +132,8 @@ namespace LagerSystem.Views
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PalletId"] = new SelectList(_context.Pallets, "Id", "Id", position.PalletId);
-            return View(position);
+            ViewData["PalletId"] = new SelectList(_context.Pallets, "Id", "Id", vm.Position.PalletId);
+            return View(vm.Position);
         }
 
         // GET: Positions/Delete/5
