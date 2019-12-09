@@ -20,9 +20,9 @@ namespace LagerSystem.Views
         }
 
         // GET: Positions
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int id)
         {
-            var positions = _context.Positions.Include(p => p.Pallet).OrderBy(r => r.RackPosition);
+            var positions = _context.Positions.Include(p => p.Pallet).OrderBy(r => r.RackPosition).Where(i => i.RackId == id);
             return View(await positions.ToListAsync());
         }
 

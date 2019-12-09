@@ -11,6 +11,5 @@ namespace LagerSystem.Models
 
         public int StorageId { get; set; }
         public Storage Storage { get; set; }
-
     }
 }

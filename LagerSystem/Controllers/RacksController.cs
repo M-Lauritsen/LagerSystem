@@ -1,5 +1,6 @@
 ﻿using LagerSystem.Data;
 using LagerSystem.Models;
+using LagerSystem.Models.StorageViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -20,7 +21,8 @@ namespace LagerSystem.Views
         // GET: Racks
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Racks.ToListAsync());
+            var racks = await _context.Racks.Include(p => p.Positions).ToListAsync();
+            return View(racks);
         }
 
         // GET: Racks/Details/5
@@ -47,9 +49,6 @@ namespace LagerSystem.Views
             return View();
         }
 
-        // POST: Racks/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Height,Width")] Rack rack)
@@ -98,9 +97,6 @@ namespace LagerSystem.Views
             return View(rack);
         }
 
-        // POST: Racks/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Height,Width")] Rack rack)
@@ -140,7 +136,6 @@ namespace LagerSystem.Views
             {
                 return NotFound();
             }
-            //TODO Funktion til at sætte pallets rackposition til null
             var rack = await _context.Racks
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (rack == null)
