@@ -1,6 +1,7 @@
 ﻿using LagerSystem.Data;
 using LagerSystem.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.Linq;
@@ -19,13 +20,30 @@ namespace LagerSystem.Controllers
             _context = context;
         }
 
-        public ActionResult Index()
+
+        public async Task<IActionResult> Index(string searchString)
         {
-            if (!_context.Storages.Any())
+            if (searchString == null)
             {
-                return RedirectToAction("Create", "Home");
+                if (!_context.Storages.Any())
+                {
+                    return RedirectToAction("Create", "Home");
+                }
+                return View();
             }
-            return View();
+
+            var stockItem = await _context.StockItems
+                           .Include(p => p.PalletItems)
+                           .ThenInclude(p => p.Pallet)
+                           .FirstOrDefaultAsync(m => m.Name == searchString);
+
+            if (stockItem == null)
+            {
+                return NotFound();
+            }
+
+            return View(stockItem);
+
         }
 
         // GET: Storages/Create

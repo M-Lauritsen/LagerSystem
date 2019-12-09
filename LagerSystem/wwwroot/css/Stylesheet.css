@@ -1,4 +1,9 @@
-﻿.CustomCard{
-    height: 10%;
+﻿.custom-card{
+    height: 135px;
+}
 
+.footer-custom {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }

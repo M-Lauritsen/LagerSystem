@@ -1,4 +1,6 @@
-﻿@{
+﻿@model LagerSystem.Models.StockItem
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -6,3 +8,37 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+<form asp-controller="Home" asp-action="Index">
+    <p>
+
+        Search product: <input type="text" id="item" name="searchString" />
+        <input type="submit" value="Filter" />
+
+    </p>
+</form>
+@if (Model != null)
+{
+    <div class="card-columns">
+        @foreach (var item in Model.PalletItems)
+        {
+
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-text">
+                        Pallet: @item.Pallet.Id <br />
+                        Position: @Html.DisplayFor(modelItem => item.Pallet.RackPosition)
+                    </h6>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/lib/jquery-ui-1.12.1.custom/external/jquery/jquery.js"></script>
+    <script src="~/lib/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+    <link href="~/lib/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet" />
+
+    <script src="~/js/Autocomplete.js"></script>
+}
