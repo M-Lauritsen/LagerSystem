@@ -14,21 +14,49 @@
 <div class="card-columns">
     @foreach (var item in Model)
     {
-        <div class="card">
-            <div class="card-body">
-                <h6 class="card-text">
-                    Pallet ID: @Html.DisplayFor(modelItem => item.Pallet.Id)<br />
-                    Position: @Html.DisplayFor(modelItem => item.RackPosition)
-                </h6>
-                <h6 class="card-title">
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    @if (item.PalletId != null)
-                    {
-                    <a asp-action="RemovePallet" asp-route-id="@item.Id">Remove Pallet</a>
-                    }
-                </h6>
-            </div>
+
+
+    <div class="card">
+        <div class="card-body">
+            Pallet ID: @Html.DisplayFor(modelItem => item.Pallet.Id)<br />
+            Position: @Html.DisplayFor(modelItem => item.RackPosition)
+
         </div>
+        <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
+
+        <span class="card-title activator grey-text text-darken-4">test!<i class="material-icons right" more_vert></i></span>
+        <div class="card-footer">
+            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+            @if (item.PalletId != null)
+            {
+                <a asp-action="RemovePallet" asp-route-id="@item.Id">Remove Pallet</a>
+            }
+
+        </div>         
+        
+
+        <div class="card-reveal">
+            <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
+            <p>Here is some more information about this product that is only revealed once clicked on.</p>
+        </div>
+    </div>
+        @*<div class="card">
+                <div class="card-body">
+                    <h6 class="card-text">
+                        Pallet ID: @Html.DisplayFor(modelItem => item.Pallet.Id)<br />
+                        Position: @Html.DisplayFor(modelItem => item.RackPosition)
+                    </h6>
+                    <div class="card-footer">
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        @if (item.PalletId != null)
+                        {
+                            <a asp-action="RemovePallet" asp-route-id="@item.Id">Remove Pallet</a>
+                        }
+                    </div>
+
+                </div>
+            </div>*@
     }
 </div>

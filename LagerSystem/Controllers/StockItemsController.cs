@@ -41,6 +41,7 @@ namespace LagerSystem.Views
                 .Include(p => p.PalletItems)
                 .ThenInclude(p => p.Pallet)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (stockItem == null)
             {
                 return NotFound();
