@@ -130,7 +130,7 @@ namespace LagerSystem.Views
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Positions", new { id = vm.Position.RackId });
             }
             ViewData["PalletId"] = new SelectList(_context.Pallets, "Id", "Id", vm.Position.PalletId);
             return View(vm.Position);
@@ -186,7 +186,7 @@ namespace LagerSystem.Views
                 return NotFound();
             }
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index","Positions",new { id = pos.RackId });
         }
     }
 }
