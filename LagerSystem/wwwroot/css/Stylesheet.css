@@ -7,3 +7,65 @@
     bottom: 0;
     width: 100%;
 }
+
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    padding: 20px;
+}
+
+/* Circle Chart */
+.circle-chart-container {
+    clear: left;
+    float: left;
+    position: relative;
+    max-width: 165px;
+    width: 100%;
+}
+
+.circle-chart {
+    overflow: visible;
+}
+
+.circle-chart-circle {
+    animation: circle-chart-fill 1.35s reverse;
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+    transform-origin: center;
+}
+
+.circle-chart-two {
+    left: 6%;
+    max-width: 88%;
+    position: absolute;
+    top: 6%;
+}
+
+.circle-chart-percentage {
+    -webkit-animation: fade-in-text 2.2s 0.1s forwards;
+    -moz-animation: fade-in-text 2.2s 0.1s forwards;
+    animation: fade-in-text 2.2s 0.1s forwards;
+    font-size: 22px;
+    font-weight: 700;
+    position: absolute;
+}
+
+.circle-chart-one-percentage {
+    color: #5292AC;
+    left: 65px;
+    top: 60px;
+}
+
+.circle-chart-two-percentage {
+    color: #64B2D1;
+    left: 40px;
+    top: 90px;
+}
+
+@keyframes circle-chart-fill {
+    to {
+        stroke-dasharray: 0 100;
+    }
+}

@@ -20,7 +20,7 @@ namespace LagerSystem.Views
         // GET: Pallets
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Pallets.OrderBy(p => p.Id).ToListAsync());
+            return View(await _context.Pallets.Include(p => p.PalletItems).OrderBy(p => p.Id).ToListAsync());
         }
 
         // GET: Pallets/Details/5

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -91,7 +92,10 @@ namespace LagerSystem.Views
             {
                 return NotFound();
             }
-            ViewData["PalletId"] = new SelectList(_context.Pallets, "Id", "Id", position.Position.PalletId);
+
+            //ViewData["ID"] bliver grebet i Frontend med aps-item="Viewbag."ID"" vælger kun pallet med rackposition = null (så paller uden position)
+            ViewData["PalletId"] = new SelectList(_context.Pallets.Where(r => r.RackPosition == null), "Id", "Id", position.Position.PalletId);
+
             return View(position);
         }
 
@@ -132,7 +136,8 @@ namespace LagerSystem.Views
                 }
                 return RedirectToAction("Index", "Positions", new { id = vm.Position.RackId });
             }
-            ViewData["PalletId"] = new SelectList(_context.Pallets, "Id", "Id", vm.Position.PalletId);
+            //ViewData["ID"] bliver grebet i Frontend med aps-item="Viewbag."ID"" vælger kun pallet med rackposition = null (så paller uden position)
+            ViewData["PalletId"] = new SelectList(_context.Pallets.Where(r => r.RackPosition == null), "Id", "Id", vm.Position.PalletId);
             return View(vm.Position);
         }
 
@@ -179,14 +184,14 @@ namespace LagerSystem.Views
 
             _context.Update(pos);
             _context.SaveChanges();
-            
+
 
             if (pos == null)
             {
                 return NotFound();
             }
 
-            return RedirectToAction("Index","Positions",new { id = pos.RackId });
+            return RedirectToAction("Index", "Positions", new { id = pos.RackId });
         }
     }
 }
