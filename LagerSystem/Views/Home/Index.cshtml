@@ -13,52 +13,51 @@
         Telephone: @Model.Storage.Telephone
     </text>
 </div>
-<div class="row">   
-<form style="float:left" asp-controller="Home" asp-action="Index">
+
+
+<form style="float:right; margin-top:5%;" asp-controller="Home" asp-action="Index">
     <p>
         Search Product: <input type="text" id="item" name="searchString" />
         <input type="submit" value="Search" />
     </p>
 </form>
-    <div class="column">
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Stockitem.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pallet.RackPosition)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pallet.Id)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
 
-        @if (Model.Stockitem != null)
-        {
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Stockitem.Name)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Pallet.RackPosition)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Pallet.Id)
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.Stockitem.PalletItems)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.StockItem.Name)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Pallet.RackPosition)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Pallet.Id)
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        }
-    </div>
-</div>
+    @if (Model.Stockitem != null)
+    {
+        <tbody>
+
+            @foreach (var item in Model.Stockitem.PalletItems)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StockItem.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Pallet.RackPosition)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Pallet.Id)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    }
+</table>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

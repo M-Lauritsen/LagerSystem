@@ -8,6 +8,11 @@
     width: 100%;
 }
 
+.storageInfoText {
+    color: dimgrey;
+    text-decoration: underline;
+}
+
 body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     padding: 20px;
