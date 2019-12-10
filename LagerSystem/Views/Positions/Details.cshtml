@@ -43,8 +43,8 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Position.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.Position.Id">Add Pallet</a> |
+    <a asp-action="Index" asp-route-id="@Model.Position.RackId">Back to Rack List</a>
 </div>
 
 @if (@Model.Position.Available != true)

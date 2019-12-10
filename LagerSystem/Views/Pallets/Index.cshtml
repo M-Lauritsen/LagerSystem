@@ -33,13 +33,13 @@
 
             </div>
             <div class="card-footer footer-custom text-center">
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Edit" asp-route-id="@item.Id">Add Items</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 @if (item.RackPosition == null)
                 {
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                }
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete Pallet</a>
 
+                }
 
             </div>
         </div>
