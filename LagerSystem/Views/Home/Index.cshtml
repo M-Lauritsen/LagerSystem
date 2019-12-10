@@ -1,44 +1,70 @@
-﻿@model LagerSystem.Models.StockItem
+﻿@model LagerSystem.Models.StorageViewModel.StorageStockitemViewModel
 
 @{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4 storageInfoText">@Model.Storage.StorageName</h1>
+    <text class="storageInfoText">
+        @Model.Storage.StreetName
+        @Model.Storage.Postal
+        @Model.Storage.City   <br />
+        Telephone: @Model.Storage.Telephone
+    </text>
 </div>
-<form asp-controller="Home" asp-action="Index">
+<div class="row">   
+<form style="float:left" asp-controller="Home" asp-action="Index">
     <p>
-
-        Search product: <input type="text" id="item" name="searchString" />
-        <input type="submit" value="Filter" />
-
+        Search Product: <input type="text" id="item" name="searchString" />
+        <input type="submit" value="Search" />
     </p>
 </form>
-@if (Model != null)
-{
-    <div class="card-columns">
-        @foreach (var item in Model.PalletItems)
-        {
+    <div class="column">
 
-            <div class="card">
-                <div class="card-body">
-                    <h6 class="card-text">
-                        Pallet: @item.Pallet.Id <br />
-                        Position: @Html.DisplayFor(modelItem => item.Pallet.RackPosition)
-                    </h6>
-                </div>
-            </div>
+        @if (Model.Stockitem != null)
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Stockitem.Name)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Pallet.RackPosition)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Pallet.Id)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Stockitem.PalletItems)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StockItem.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Pallet.RackPosition)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Pallet.Id)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         }
     </div>
-}
+</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script src="~/lib/jquery-ui-1.12.1.custom/external/jquery/jquery.js"></script>
     <script src="~/lib/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
     <link href="~/lib/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet" />
-
+    <link href="~/css/Stylesheet.css" rel="stylesheet" />
     <script src="~/js/Autocomplete.js"></script>
 }

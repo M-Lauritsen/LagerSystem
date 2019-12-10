@@ -1,5 +1,6 @@
 ﻿using LagerSystem.Data;
 using LagerSystem.Models;
+using LagerSystem.Models.StorageViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -23,27 +24,30 @@ namespace LagerSystem.Controllers
 
         public async Task<IActionResult> Index(string searchString)
         {
+            StorageStockitemViewModel vm = new StorageStockitemViewModel();
             if (searchString == null)
             {
                 if (!_context.Storages.Any())
                 {
                     return RedirectToAction("Create", "Home");
                 }
-                return View();
+                vm.Storage = _context.Storages.FirstOrDefault();
+                return View(vm);
             }
+            vm.Storage = _context.Storages.FirstOrDefault();
+            vm.Stockitem = await _context.StockItems
+                                      .Include(p => p.PalletItems)
+                                      .ThenInclude(p => p.Pallet)
+                                      .FirstOrDefaultAsync(m => m.Name == searchString);
 
-            var stockItem = await _context.StockItems
-                           .Include(p => p.PalletItems)
-                           .ThenInclude(p => p.Pallet)
-                           .FirstOrDefaultAsync(m => m.Name == searchString);
-
-            if (stockItem == null)
+            if (vm.Stockitem == null)
             {
                 return NotFound();
             }
-
-            return View(stockItem);
-
+            
+            
+           
+            return View(vm);
         }
 
         // GET: Storages/Create

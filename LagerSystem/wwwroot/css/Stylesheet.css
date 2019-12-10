@@ -7,3 +7,19 @@
     bottom: 0;
     width: 100%;
 }
+
+.main {
+    width: 450px;
+    margin: 30px;
+}
+
+.column {
+    float: left;
+    width: 50%;
+    padding: 10px;   
+}
+
+.storageInfoText {
+    color: dimgrey;
+    text-decoration: underline;
+}
