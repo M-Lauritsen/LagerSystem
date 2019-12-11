@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LagerSystem.Migrations
 {
     [DbContext(typeof(StorageContext))]
-    [Migration("20191204071414_init")]
+    [Migration("20191211081312_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -70,7 +70,7 @@ namespace LagerSystem.Migrations
                     b.Property<int?>("PalletId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RackId")
+                    b.Property<int>("RackId")
                         .HasColumnType("int");
 
                     b.Property<string>("RackPosition")
@@ -186,7 +186,8 @@ namespace LagerSystem.Migrations
                     b.HasOne("LagerSystem.Models.Rack", "Rack")
                         .WithMany("Positions")
                         .HasForeignKey("RackId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("LagerSystem.Models.Rack", b =>
