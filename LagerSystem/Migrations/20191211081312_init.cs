@@ -104,7 +104,7 @@ namespace LagerSystem.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Available = table.Column<bool>(nullable: false),
                     PalletId = table.Column<int>(nullable: true),
-                    RackId = table.Column<int>(nullable: true),
+                    RackId = table.Column<int>(nullable: false),
                     Width = table.Column<int>(nullable: false),
                     Height = table.Column<int>(nullable: false),
                     RackPosition = table.Column<string>(nullable: true)
