@@ -8,11 +8,11 @@
 
 <h4>Pallet</h4>
 <hr />
-<div class="col-md-4">
+<div class="">
     <form asp-action="Edit">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="Pallet.Id" />
-        <div class="form-group">
+        <div class="form-group col-md-4" style="padding-left: 0%;">
             <label asp-for="StockItem.Name" class="control-label"></label>
             <input asp-for="StockItem.Name" id="item" placeholder="Product Search" class="form-control" />
             <span asp-validation-for="StockItem.Name" class="text-danger"></span>
@@ -22,27 +22,29 @@
             <input type="submit" value="Add Item" class="btn btn-primary" />
         </div>
     </form>
-</div>
-
-<div class="card-columns">
-    <div class="card">
-        <div class="card-body">
-            @foreach (var item in Model.Pallet.PalletItems)
-            {
-                <h6 class="card-text">
-                    @Html.DisplayFor(modelItem => item.StockItem.Name)<br />
-                </h6>
-                <h6 class="card-title">
-                    <a asp-action="DeleteItem" asp-route-id="@item.StockItem.Id">Delete<input type="hidden" asp-for="Pallet.Id" /></a>
-                </h6>
-            }
+    @if (Model.Pallet.PalletItems != null)
+    {
+        <div class="card-columns">
+            <div class="card">
+                <div class="card-body">
+                    @foreach (var item in Model.Pallet.PalletItems)
+                    {
+                        <h6 class="card-text">
+                            @Html.DisplayFor(modelItem => item.StockItem.Name)<br />
+                        </h6>
+                        <h6 class="card-title">
+                            <a asp-action="DeleteItem" asp-route-id="@item.StockItem.Id">Delete<input type="hidden" asp-for="Pallet.Id" /></a>
+                        </h6>
+                    }
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-
+    }
 
 <div>
     <a asp-action="Index">Back to List</a>
+</div>
+
 </div>
 
 @section Scripts {
@@ -50,6 +52,5 @@
     <script src="~/lib/jquery-ui-1.12.1.custom/external/jquery/jquery.js"></script>
     <script src="~/lib/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
     <link href="~/lib/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet" />
-
     <script src="~/js/Autocomplete.js"></script>
 }
