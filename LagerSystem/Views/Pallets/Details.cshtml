@@ -7,8 +7,7 @@
 <h1>Details</h1>
 
 <div>
-    <h4>Pallet</h4>
-    <hr />
+    <h4>Pallet: @Model.Id</h4>
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.RackPosition)
@@ -17,12 +16,9 @@
             @Html.DisplayFor(model => model.RackPosition)
         </dd>
     </dl>
+    <hr />
 </div>
 
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Add Items</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
 <div class="card-columns">
     @foreach (var item in Model.PalletItems)
     {
@@ -34,4 +30,8 @@
             </div>
         </div>
     }
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Add Items</a> |
+    <a asp-action="Index">Back to List</a>
 </div>
